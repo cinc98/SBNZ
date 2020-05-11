@@ -11,16 +11,20 @@ public class Reservation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@ManyToOne
 	@JoinColumn(name = "car_id", nullable = false)
-	private Car car;*/
+	private Car car;
 
-	private Date from;
-	private Date until;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fromDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date untilDate;
+	
 	private int status;
 	private int price;
 
@@ -31,26 +35,26 @@ public class Reservation implements Serializable {
 
 	public Reservation(Date from, Date until, int status, int price) {
 		super();
-		this.from = from;
-		this.until = until;
+		this.fromDate = from;
+		this.untilDate = until;
 		this.status = status;
 		this.price = price;
 	}
 
 	public Date getFrom() {
-		return from;
+		return fromDate;
 	}
 
 	public void setFrom(Date from) {
-		this.from = from;
+		this.fromDate = from;
 	}
 
 	public Date getUntil() {
-		return until;
+		return untilDate;
 	}
 
 	public void setUntil(Date until) {
-		this.until = until;
+		this.untilDate = until;
 	}
 
 	public int getStatus() {

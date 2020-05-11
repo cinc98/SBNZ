@@ -2,6 +2,8 @@ package sbnz.integracija.example.facts;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -12,7 +14,21 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@ManyToMany
+	@JoinTable(
+	  name = "searches", 
+	  joinColumns = @JoinColumn(name = "user_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "car_id"))
+	Set<Car> cars;
 	
+	public Set<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(Set<Car> cars) {
+		this.cars = cars;
+	}
+
 	private String username;
 
 	private String password;
