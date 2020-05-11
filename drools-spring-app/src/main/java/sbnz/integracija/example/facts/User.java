@@ -1,23 +1,32 @@
 package sbnz.integracija.example.facts;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
+@SuppressWarnings("serial")
 @Entity // This tells Hibernate to make a table out of this class
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
+public class User implements Serializable{
+	
 	private String username;
 
 	private String password;
 
 	private Date registrationDate;
+
+	
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public User(String username, String password, String medal) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.medal = medal;
+	}
 
 	public String getUsername() {
 		return username;
@@ -44,14 +53,6 @@ public class User {
 	}
 
 	private String medal;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getPassword() {
 		return password;
