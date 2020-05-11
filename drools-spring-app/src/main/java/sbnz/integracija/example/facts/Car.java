@@ -2,6 +2,7 @@ package sbnz.integracija.example.facts;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ public class Car implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
 	private String name;
 	private String model;
 	private int km;
@@ -20,7 +22,7 @@ public class Car implements Serializable{
 	private int searched;
 	private String category;
 	
-		
+
 	
 	public Car(String name, String model, int km, Date date, int price, String category) {
 		super();

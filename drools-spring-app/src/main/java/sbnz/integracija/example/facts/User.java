@@ -3,18 +3,22 @@ package sbnz.integracija.example.facts;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
-@Entity // This tells Hibernate to make a table out of this class
+@Entity 
 public class User implements Serializable{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
 	
 	private String username;
 
 	private String password;
 
 	private Date registrationDate;
-
+	
 	
 	public User() {
 		super();
