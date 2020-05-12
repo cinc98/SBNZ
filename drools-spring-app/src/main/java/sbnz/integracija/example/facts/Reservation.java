@@ -26,7 +26,7 @@ public class Reservation implements Serializable {
 	private Date untilDate;
 	
 	private int status;
-	private int price;
+	private double price;
 	
 
 	@Override
@@ -40,27 +40,27 @@ public class Reservation implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reservation(Date from, Date until, int status, int price) {
+	public Reservation(Date fromDate, Date untilDate, int status, int price) {
 		super();
-		this.fromDate = from;
-		this.untilDate = until;
+		this.fromDate = fromDate;
+		this.untilDate = untilDate;
 		this.status = status;
 		this.price = price;
 	}
 
-	public Date getFrom() {
+	public Date getFromDate() {
 		return fromDate;
 	}
 
-	public void setFrom(Date from) {
+	public void setFromDate(Date from) {
 		this.fromDate = from;
 	}
 
-	public Date getUntil() {
+	public Date getUntilDate() {
 		return untilDate;
 	}
 
-	public void setUntil(Date until) {
+	public void setUntilDate(Date until) {
 		this.untilDate = until;
 	}
 
@@ -72,11 +72,11 @@ public class Reservation implements Serializable {
 		this.status = status;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

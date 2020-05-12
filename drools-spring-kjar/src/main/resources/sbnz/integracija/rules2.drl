@@ -2,6 +2,10 @@ package sbnz.integracija;
 
 import sbnz.integracija.example.facts.Item;
 import sbnz.integracija.example.facts.User;
+import sbnz.integracija.example.facts.Reservation;
+import org.apache.commons.lang.time.DateUtils
+import java.util.*
+
 /*
 rule "Classify Item - High Range"
     when
@@ -11,10 +15,15 @@ rule "Classify Item - High Range"
         update($i);
 end*/
 
-rule "Medal"
+rule "Popust od 20% ukoliko korisnik zakaže rentiranje mesec dana ranije"
+	lock-on-active true
 	when 
-		$i: User(username == 'a')
+		$i: Reservation($datumPocetka : fromDate,
+		$pomeren: DateUtils.addDays(new Date(), 30),
+        eval($pomeren.before(fromDate))
+		)
 	then
-		$i.setUsername('blef');
+		$i.setPrice($i.getPrice()*0.8);
 		update($i);
+		
 end

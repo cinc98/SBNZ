@@ -1,5 +1,7 @@
 package sbnz.integracija.example;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,20 +28,21 @@ import sbnz.integracija.example.facts.User;
 @RestController
 public class SampleAppController {
 	private static Logger log = LoggerFactory.getLogger(SampleAppController.class);
-	
+
 	private final SampleAppService sampleService;
 	@Autowired
-	private UserRepository repo ;
+	private UserRepository repo;
 	@Autowired
-	private CarRepository carRepo ;
+	private CarRepository carRepo;
+
 	@Autowired
 	public SampleAppController(SampleAppService sampleService) {
 		this.sampleService = sampleService;
 	}
+
 	@RequestMapping(value = "/add/user", method = RequestMethod.POST)
-	public @ResponseBody String addNewUser(@RequestParam String username
-		      , @RequestParam String password) {
-		Date date = new Date();		
+	public @ResponseBody String addNewUser(@RequestParam String username, @RequestParam String password) {
+		Date date = new Date();
 		User u = new User();
 		u.setUsername(username);
 		u.setPassword(password);
@@ -48,33 +51,32 @@ public class SampleAppController {
 		repo.save(u);
 		return "saved";
 	}
+
 	@RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
-	public User getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
-			@RequestParam(required = true) double cost, @RequestParam(required = true) double salePrice) {
-		
-		/*Car c = new Car();
-		System.out.println(c);
-		carRepo.save(c);
-		User u = new User();
-		
-		u.getCars().add(c);
-		c.getUsers().add(u);
-		u.setUsername("a");
-		System.out.println(u);
-		repo.save(u);
-		
-		System.out.println(repo.getSearches(1));*/
-		User u = new User();
-		u.setUsername("a");
-		
-		//Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
-		System.out.println(u);
-		//log.debug("Item request received for: " + newItem);
-		User i2 = sampleService.getClassifiedItem(u);
+	public Reservation getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
+			@RequestParam(required = true) double cost, @RequestParam(required = true) double salePrice) throws ParseException {
+
+		/*
+		 * Car c = new Car(); System.out.println(c); carRepo.save(c); User u = new
+		 * User();
+		 * 
+		 * u.getCars().add(c); c.getUsers().add(u); u.setUsername("a");
+		 * System.out.println(u); repo.save(u);
+		 * 
+		 * System.out.println(repo.getSearches(1));
+		 */
+
+		Reservation newRes = new Reservation();
+		String sDate1 = "31/12/2021";
+		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+		newRes.setFromDate(date1);
+		newRes.setStatus(0);
+		newRes.setPrice(5000);
+		// Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
+		// log.debug("Item request received for: " + newItem);
+		Reservation i2 = sampleService.getClassifiedItem(newRes);
 
 		return i2;
 	}
-	
-	
-	
+
 }
