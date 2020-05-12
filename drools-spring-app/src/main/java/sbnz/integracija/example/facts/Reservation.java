@@ -27,6 +27,13 @@ public class Reservation implements Serializable {
 	
 	private int status;
 	private int price;
+	
+
+	@Override
+	public String toString() {
+		return "Reservation [id=" + id + ", user=" + user + ", car=" + car + ", fromDate=" + fromDate + ", untilDate="
+				+ untilDate + ", status=" + status + ", price=" + price + "]";
+	}
 
 	public Reservation() {
 		super();

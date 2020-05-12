@@ -15,7 +15,7 @@ public class Car implements Serializable{
 	private Integer id;
 	
 	@ManyToMany(mappedBy = "cars")
-	Set<User> users;
+	Set<User> users = new HashSet<User>() ;
 	
 	public Set<User> getUsers() {
 		return users;
@@ -32,8 +32,14 @@ public class Car implements Serializable{
 	private int searched;
 	private String category;
 	
-
 	
+	
+	@Override
+	public String toString() {
+		return "Car [id=" + id + ", name=" + name + ", model=" + model + ", km=" + km + ", date="
+				+ date + ", price=" + price + ", number=" + number + ", searched=" + searched + ", category=" + category
+				+ "]";
+	}
 	public Car(String name, String model, int km, Date date, int price, String category) {
 		super();
 		this.name = name;
@@ -45,7 +51,6 @@ public class Car implements Serializable{
 	}
 	public Car() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Integer getId() {
 		return id;

@@ -14,12 +14,20 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@ManyToMany
 	@JoinTable(
 	  name = "searches", 
 	  joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "car_id"))
-	Set<Car> cars;
+	Set<Car> cars = new HashSet<Car>();
 	
 	public Set<Car> getCars() {
 		return cars;
@@ -41,6 +49,15 @@ public class User implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public User(Integer id, String username, String password, Date registrationDate, String medal) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.registrationDate = registrationDate;
+		this.medal = medal;
+	}
+
 	public User(String username, String password, String medal) {
 		super();
 		this.username = username;
@@ -81,4 +98,11 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", cars=" + cars + ", username=" + username + ", password=" + password
+				+ ", registrationDate=" + registrationDate + ", medal=" + medal + "]";
+	}
+	
 }
