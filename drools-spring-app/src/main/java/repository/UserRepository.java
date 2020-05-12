@@ -20,4 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query("update User p set p.medal = :medal where p.username = :username")
 	int updateUserMedal(@Param("medal") String medal, @Param("username") String string);
+	
+	
+	@Query("SELECT count(*) FROM User where id = :user_id ")
+	int getSearches(@Param("user_id") int id);
+	
 }

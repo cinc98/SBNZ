@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,8 @@ public class SampleAppController {
 	@Autowired
 	private UserRepository repo ;
 	@Autowired
+	private CarRepository carRepo ;
+	@Autowired
 	public SampleAppController(SampleAppService sampleService) {
 		this.sampleService = sampleService;
 	}
@@ -46,11 +49,10 @@ public class SampleAppController {
 		return "saved";
 	}
 	@RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
-	public Item getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
+	public User getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
 			@RequestParam(required = true) double cost, @RequestParam(required = true) double salePrice) {
 		
-		/*ManyToMany
-		  Car c = new Car();
+		/*Car c = new Car();
 		System.out.println(c);
 		carRepo.save(c);
 		User u = new User();
@@ -60,14 +62,15 @@ public class SampleAppController {
 		u.setUsername("a");
 		System.out.println(u);
 		repo.save(u);
-		*/
 		
+		System.out.println(repo.getSearches(1));*/
+		User u = new User();
+		u.setUsername("a");
 		
-		
-		Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
-
-		log.debug("Item request received for: " + newItem);
-		Item i2 = sampleService.getClassifiedItem(newItem);
+		//Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
+		System.out.println(u);
+		//log.debug("Item request received for: " + newItem);
+		User i2 = sampleService.getClassifiedItem(u);
 
 		return i2;
 	}

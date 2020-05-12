@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sbnz.integracija.example.facts.Item;
+import sbnz.integracija.example.facts.User;
 
 @Service
 public class SampleAppService {
@@ -22,7 +23,14 @@ public class SampleAppService {
 		this.kieContainer = kieContainer;
 	}
 
-	public Item getClassifiedItem(Item i) {
+	/*public Item getClassifiedItem(Item i) {
+		KieSession kieSession = kieContainer.newKieSession();
+		kieSession.insert(i);
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		return i;
+	}*/
+	public User getClassifiedItem(User i) {
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(i);
 		kieSession.fireAllRules();

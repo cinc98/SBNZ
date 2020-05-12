@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import sbnz.integracija.example.facts.Car;
-import sbnz.integracija.example.facts.Reservation;
 
 public interface CarRepository extends JpaRepository<Car, Long>{
 	List<Car> findAll();

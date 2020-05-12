@@ -1,11 +1,20 @@
 package sbnz.integracija;
 
 import sbnz.integracija.example.facts.Item;
-
+import sbnz.integracija.example.facts.User;
+/*
 rule "Classify Item - High Range"
     when
         $i: Item( cost > 300, category == Category.NA )
     then
         $i.setCategory(Item.Category.HIGH_RANGE);
         update($i);
+end*/
+
+rule "Medal"
+	when 
+		$i: User(username == 'a')
+	then
+		$i.setUsername('blef');
+		update($i);
 end
