@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -29,26 +30,27 @@ public class SampleAppService {
 	public SampleAppService(KieContainer kieContainer) {
 		log.info("Initialising a new example session.");
 		this.kieContainer = kieContainer;
+		
 	}
+	
 
-	/*public Item getClassifiedItem(Item i) {
-		KieSession kieSession = kieContainer.newKieSession();
-		kieSession.insert(i);
-		kieSession.fireAllRules();
-		kieSession.dispose();
-		return i;
-	}*/
 
 	public Reservation getClassifiedItem(Reservation i) {
 		KieSession kieSession = kieContainer.newKieSession();
-	/*	DateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
-		Date now =new Date();
-		Reservation n = new Reservation();
-		n.setFromDate(now);
-		kieSession.insert(n);*/
 		kieSession.insert(i);
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return i;
+	}
+	public Reservation getClassifiedItem(List<Reservation> reservations,Reservation res) {
+		KieSession kieSession = kieContainer.newKieSession();
+		kieSession.insert(res);
+		for(Reservation r : reservations)
+			kieSession.insert(r);
+
+		kieSession.getAgenda().getAgendaGroup("popusti").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		return res;
 	}
 }

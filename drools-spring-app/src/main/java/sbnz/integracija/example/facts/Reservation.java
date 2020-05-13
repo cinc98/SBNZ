@@ -11,9 +11,33 @@ public class Reservation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+
+	public int getUser() {
+		return user.getId();
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public int getCar() {
+		return car.getId();
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "car_id", nullable = false)

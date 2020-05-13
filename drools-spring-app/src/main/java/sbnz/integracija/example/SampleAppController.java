@@ -34,6 +34,8 @@ public class SampleAppController {
 	private UserRepository repo;
 	@Autowired
 	private CarRepository carRepo;
+	@Autowired
+	private ReservationRepository resRepo;
 
 	@Autowired
 	public SampleAppController(SampleAppService sampleService) {
@@ -70,12 +72,23 @@ public class SampleAppController {
 		String sDate1 = "31/12/2021";
 		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
 		newRes.setFromDate(date1);
-		newRes.setStatus(0);
+		newRes.setStatus(20);
 		newRes.setPrice(5000);
+		
+		User o = new User();
+		o.setId((int)cost);
+		
+		Car c = new Car();
+		c.setId((int) salePrice);
+		
+		newRes.setUser(o);
+		newRes.setCar(c);
+		List<Reservation> reservations = resRepo.findAll();
 		// Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
 		// log.debug("Item request received for: " + newItem);
-		Reservation i2 = sampleService.getClassifiedItem(newRes);
-
+		Reservation i2 = sampleService.getClassifiedItem(reservations,newRes);
+		
+		
 		return i2;
 	}
 
