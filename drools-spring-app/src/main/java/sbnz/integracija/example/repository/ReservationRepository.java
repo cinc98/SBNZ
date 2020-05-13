@@ -1,4 +1,4 @@
-package repository;
+package sbnz.integracija.example.repository;
 
 import java.util.List;
 
@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import sbnz.integracija.example.facts.Reservation;
-import sbnz.integracija.example.facts.User;
+import sbnz.integracija.example.model.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 	

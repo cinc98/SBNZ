@@ -1,7 +1,5 @@
-package sbnz.integracija.example;
+package sbnz.integracija.example.service;
 
-
-import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -13,37 +11,35 @@ import org.springframework.stereotype.Service;
 import sbnz.integracija.example.model.Reservation;
 
 @Service
-public class SampleAppService {
-
-	private static Logger log = LoggerFactory.getLogger(SampleAppService.class);
+public class ReservationService {
+	private static Logger log = LoggerFactory.getLogger(ReservationService.class);
 
 	private final KieContainer kieContainer;
 
 	@Autowired
-	public SampleAppService(KieContainer kieContainer) {
+	public ReservationService(KieContainer kieContainer) {
 		log.info("Initialising a new example session.");
 		this.kieContainer = kieContainer;
 		
 	}
 	
 
-
-	public Reservation getClassifiedItem(Reservation i) {
+	public Reservation discountReservation(Reservation r) {
 		KieSession kieSession = kieContainer.newKieSession();
-		kieSession.insert(i);
+		kieSession.insert(r);
+		kieSession.getAgenda().getAgendaGroup("popusti").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		return i;
+		return r;
 	}
-	public Reservation getClassifiedItem(List<Reservation> reservations,Reservation res) {
+	
+	public Reservation cancelReservation(Reservation r) {
 		KieSession kieSession = kieContainer.newKieSession();
-		kieSession.insert(res);
-		for(Reservation r : reservations)
-			kieSession.insert(r);
-
+		kieSession.insert(r);
 		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		return res;
+		return r;
 	}
+
 }
