@@ -54,8 +54,9 @@ public class SampleAppController {
 //	}
 
 	@RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
-	public Reservation getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
-			@RequestParam(required = true) double cost, @RequestParam(required = true) double salePrice) throws ParseException {
+	public Reservation getQuestions(@RequestParam(required = true) String id,
+			@RequestParam(required = true) String name, @RequestParam(required = true) double cost,
+			@RequestParam(required = true) double salePrice) throws ParseException {
 
 		/*
 		 * Car c = new Car(); System.out.println(c); carRepo.save(c); User u = new
@@ -74,23 +75,22 @@ public class SampleAppController {
 		Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
 		newRes.setFromDate(date1);
 		newRes.setUntilDate(date2);
-		//newRes.setStatus(0);
+		// newRes.setStatus(0);
 		newRes.setPrice(5000);
-		
+
 		User o = new User();
-		o.setId((int)cost);
-		
+		o.setId((int) cost);
+
 		Car c = new Car();
 		c.setId((int) salePrice);
-		
+
 		newRes.setUser(o);
 		newRes.setCar(c);
 		List<Reservation> reservations = resRepo.findAll();
 		// Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
 		// log.debug("Item request received for: " + newItem);
-		Reservation i2 = sampleService.getClassifiedItem(reservations,newRes);
-		
-		
+		Reservation i2 = sampleService.getClassifiedItem(reservations, newRes);
+
 		return i2;
 	}
 

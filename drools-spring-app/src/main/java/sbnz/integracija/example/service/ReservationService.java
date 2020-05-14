@@ -1,6 +1,8 @@
 package sbnz.integracija.example.service;
 
 
+import java.util.List;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -24,18 +26,22 @@ public class ReservationService {
 	}
 	
 
-	public Reservation discountReservation(Reservation r) {
+	public Reservation discountReservation(List<Reservation> reservations, Reservation r) {
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(r);
+		for(Reservation res : reservations)
+			kieSession.insert(res);
 		kieSession.getAgenda().getAgendaGroup("popusti").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return r;
 	}
 	
-	public Reservation cancelReservation(Reservation r) {
+	public Reservation cancelReservation(List<Reservation> reservations, Reservation r) {
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(r);
+		for(Reservation res : reservations)
+			kieSession.insert(res);
 		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();

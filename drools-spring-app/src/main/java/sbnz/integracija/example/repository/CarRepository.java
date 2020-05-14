@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import sbnz.integracija.example.model.Car;
 
 public interface CarRepository extends JpaRepository<Car, Long>{
+	
 	List<Car> findAll();
+	Car findOneById(int id);
 	
 	@Transactional
 	@Modifying

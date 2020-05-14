@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
 @SuppressWarnings("serial")
 @Entity
 public class Reservation implements Serializable {
@@ -13,9 +12,9 @@ public class Reservation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	private String status;
 
+	private String status;
+	private int discount;
 	private double price;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -99,6 +98,14 @@ public class Reservation implements Serializable {
 
 	public void setCar(Car car) {
 		this.car = car;
+	}
+
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
 	}
 
 	@Override

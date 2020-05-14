@@ -13,7 +13,6 @@ import sbnz.integracija.example.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findAll();
-
 	User findOneByUsername(String username);
 	
 	@Transactional
