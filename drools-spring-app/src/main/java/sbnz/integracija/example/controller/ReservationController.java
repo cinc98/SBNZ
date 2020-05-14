@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,7 +60,7 @@ public class ReservationController {
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET, produces = "application/json")
 	public Reservation cancelDiscount(@RequestParam("reservationId") String reservationId) {
 		Reservation r = reservationRepository.findOneById(Integer.parseInt(reservationId));
-
+		
 		r = reservationService.cancelReservation(reservationRepository.findAll(), r);
 
 		return r;
