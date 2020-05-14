@@ -60,8 +60,11 @@ public class ReservationController {
 	}
 
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> cancelDiscount() {
+	public Reservation cancelDiscount(@RequestParam("reservationId") String reservationId) {
+		Reservation r = reservationRepository.findOneById(Integer.parseInt(reservationId));
 
-		return new ResponseEntity<>("Reservation canceled!", HttpStatus.OK);
+		r = reservationService.cancelReservation(reservationRepository.findAll(), r);
+
+		return r;
 	}
 }

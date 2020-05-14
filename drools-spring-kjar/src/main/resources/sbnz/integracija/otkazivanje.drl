@@ -1,0 +1,26 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.model.Reservation;
+import org.apache.commons.lang.time.DateUtils
+import java.util.*
+
+
+rule "Ukoliko je prethodnih godina model imao uspesno realizovana rentiranja, cena otkazivanja je 10% za svaku uspesnu godinu, pri cemu cena otkazivanja ne moze da bude veca od 100%"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience Math.min($godineSet.size()*10, 100)
+    when
+        $rezervacija : Reservation($korisnikId : user, status == "REZERVISAN")
+        $rezervacije : List() from collect ( Reservation( status == "ZAVRSEN" ) )
+        $godineSet : Set() from accumulate (
+			Reservation (
+				$godina : untilDate.getYear()
+			) from $rezervacije,
+			collectSet($godina)
+		)
+    then
+      	System.out.println("Korisnik " + $korisnikId + " mora da plati " +Math.min($godineSet.size()*10, 100)+"% od cene iznajmljivanja zbog otkazivanja!");
+		modify ($rezervacija) { setPenaltyPercentage(Math.min($godineSet.size()*10, 100)); }		
+		drools.halt();
+end

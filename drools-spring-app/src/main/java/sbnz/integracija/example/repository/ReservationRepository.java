@@ -10,13 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import sbnz.integracija.example.model.Reservation;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Long>{
-	
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+
 	List<Reservation> findAll();
 
+	Reservation findOneById(int id);
+
 	List<Reservation> findByUserId(int userId);
+
 	List<Reservation> findByCarId(int carId);
-	
+
 	@Transactional
 	@Modifying
 	@Query("update Reservation p set p.status = :status where p.id = :id")
