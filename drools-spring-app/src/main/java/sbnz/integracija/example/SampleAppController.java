@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import repository.CarRepository;
-import repository.ReservationRepository;
-import repository.UserRepository;
-import sbnz.integracija.example.facts.Car;
-import sbnz.integracija.example.facts.Item;
-import sbnz.integracija.example.facts.Reservation;
-import sbnz.integracija.example.facts.User;
+import sbnz.integracija.example.model.Car;
+import sbnz.integracija.example.model.Reservation;
+import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.repository.CarRepository;
+import sbnz.integracija.example.repository.ReservationRepository;
+import sbnz.integracija.example.repository.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -42,21 +41,22 @@ public class SampleAppController {
 		this.sampleService = sampleService;
 	}
 
-	@RequestMapping(value = "/add/user", method = RequestMethod.POST)
-	public @ResponseBody String addNewUser(@RequestParam String username, @RequestParam String password) {
-		Date date = new Date();
-		User u = new User();
-		u.setUsername(username);
-		u.setPassword(password);
-		u.setMedal("SILVER");
-		u.setRegistrationDate(date);
-		repo.save(u);
-		return "saved";
-	}
+//	@RequestMapping(value = "/add/user", method = RequestMethod.POST)
+//	public @ResponseBody String addNewUser(@RequestParam String username, @RequestParam String password) {
+//		Date date = new Date();
+//		User u = new User();
+//		u.setUsername(username);
+//		u.setPassword(password);
+//		u.setMedal("SILVER");
+//		u.setRegistrationDate(date);
+//		repo.save(u);
+//		return "saved";
+//	}
 
 	@RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
-	public Reservation getQuestions(@RequestParam(required = true) String id, @RequestParam(required = true) String name,
-			@RequestParam(required = true) double cost, @RequestParam(required = true) double salePrice) throws ParseException {
+	public Reservation getQuestions(@RequestParam(required = true) String id,
+			@RequestParam(required = true) String name, @RequestParam(required = true) double cost,
+			@RequestParam(required = true) double salePrice) throws ParseException {
 
 		/*
 		 * Car c = new Car(); System.out.println(c); carRepo.save(c); User u = new
@@ -71,24 +71,26 @@ public class SampleAppController {
 		Reservation newRes = new Reservation();
 		String sDate1 = "31/12/2021";
 		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+		String sDate2 = "31/12/2021";
+		Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
 		newRes.setFromDate(date1);
-		newRes.setStatus(20);
+		newRes.setUntilDate(date2);
+		// newRes.setStatus(0);
 		newRes.setPrice(5000);
-		
+
 		User o = new User();
-		o.setId((int)cost);
-		
+		o.setId((int) cost);
+
 		Car c = new Car();
 		c.setId((int) salePrice);
-		
+
 		newRes.setUser(o);
 		newRes.setCar(c);
 		List<Reservation> reservations = resRepo.findAll();
 		// Item newItem = new Item(Long.parseLong(id), name, cost, salePrice);
 		// log.debug("Item request received for: " + newItem);
-		Reservation i2 = sampleService.getClassifiedItem(reservations,newRes);
-		
-		
+		Reservation i2 = sampleService.getClassifiedItem(reservations, newRes);
+
 		return i2;
 	}
 

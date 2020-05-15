@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("repository")
 public class SampleApp {
 
 	private static Logger log = LoggerFactory.getLogger(SampleApp.class);
@@ -42,11 +41,5 @@ public class SampleApp {
 		kScanner.start(10_000);
 		return kContainer;
 	}
-	/*
-	 * KieServices ks = KieServices.Factory.get(); KieContainer kContainer =
-	 * ks.newKieContainer(ks.newReleaseId("drools-spring-v2",
-	 * "drools-spring-v2-kjar", "0.0.1-SNAPSHOT")); KieScanner kScanner =
-	 * ks.newKieScanner(kContainer); kScanner.start(10_000); KieSession kSession =
-	 * kContainer.newKieSession();
-	 */
+
 }

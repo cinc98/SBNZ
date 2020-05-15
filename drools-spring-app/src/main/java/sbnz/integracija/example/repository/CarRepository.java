@@ -1,4 +1,4 @@
-package repository;
+package sbnz.integracija.example.repository;
 
 import java.util.List;
 
@@ -8,10 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import sbnz.integracija.example.facts.Car;
+import sbnz.integracija.example.model.Car;
 
 public interface CarRepository extends JpaRepository<Car, Long>{
+	
 	List<Car> findAll();
+	Car findOneById(int id);
 	
 	@Transactional
 	@Modifying

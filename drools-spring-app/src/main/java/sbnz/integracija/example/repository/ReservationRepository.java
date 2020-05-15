@@ -1,4 +1,4 @@
-package repository;
+package sbnz.integracija.example.repository;
 
 import java.util.List;
 
@@ -8,19 +8,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import sbnz.integracija.example.facts.Reservation;
-import sbnz.integracija.example.facts.User;
+import sbnz.integracija.example.model.Reservation;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Long>{
-	
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+
 	List<Reservation> findAll();
 
+	Reservation findOneById(int id);
+
 	List<Reservation> findByUserId(int userId);
+
 	List<Reservation> findByCarId(int carId);
+
 	
+
 	@Transactional
 	@Modifying
-	@Query("update Reservation p set p.status = :status where p.id = :id")
-	int updateStatus(@Param("status") int status, @Param("id") int id);
+	@Query("update Reservation p set p.status = :status, p.penaltyPercentage =:penalty where p.id = :id")
+	int updateStatus(@Param("status") String status,@Param("penalty") int penalty, @Param("id") int id);
 
 }

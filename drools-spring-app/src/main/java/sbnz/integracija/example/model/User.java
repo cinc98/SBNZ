@@ -1,4 +1,4 @@
-package sbnz.integracija.example.facts;
+package sbnz.integracija.example.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,47 +8,27 @@ import java.util.Set;
 import javax.persistence.*;
 
 @SuppressWarnings("serial")
-@Entity 
-public class User implements Serializable{
+@Entity
+public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	@ManyToMany
-	@JoinTable(
-	  name = "searches", 
-	  joinColumns = @JoinColumn(name = "user_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "car_id"))
-	Set<Car> cars = new HashSet<Car>();
-	
-	public Set<Car> getCars() {
-		return cars;
-	}
-
-	public void setCars(Set<Car> cars) {
-		this.cars = cars;
-	}
 
 	private String username;
 
 	private String password;
 
 	private Date registrationDate;
-	
-	
+
+	@ManyToMany
+	@JoinTable(name = "searches", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "car_id"))
+	Set<Car> cars = new HashSet<Car>();
+
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public User(Integer id, String username, String password, Date registrationDate, String medal) {
 		super();
 		this.id = id;
@@ -63,6 +43,14 @@ public class User implements Serializable{
 		this.username = username;
 		this.password = password;
 		this.medal = medal;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -99,10 +87,18 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public Set<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(Set<Car> cars) {
+		this.cars = cars;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", cars=" + cars + ", username=" + username + ", password=" + password
 				+ ", registrationDate=" + registrationDate + ", medal=" + medal + "]";
 	}
-	
+
 }

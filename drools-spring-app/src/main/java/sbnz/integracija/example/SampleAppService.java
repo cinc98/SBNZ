@@ -1,11 +1,6 @@
 package sbnz.integracija.example;
 
-import java.text.DateFormat;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
@@ -15,9 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sbnz.integracija.example.facts.Item;
-import sbnz.integracija.example.facts.Reservation;
-import sbnz.integracija.example.facts.User;
+import sbnz.integracija.example.model.Reservation;
 
 @Service
 public class SampleAppService {
@@ -48,7 +41,7 @@ public class SampleAppService {
 		for(Reservation r : reservations)
 			kieSession.insert(r);
 
-		kieSession.getAgenda().getAgendaGroup("popusti").setFocus();
+		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
 		kieSession.fireAllRules();
 		kieSession.dispose();
 		return res;
