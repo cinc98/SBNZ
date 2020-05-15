@@ -1,29 +1,43 @@
 package sbnz.integracija;
 
-import sbnz.integracija.example.model.User;
-import sbnz.integracija.example.model.Reservation;
+import sbnz.integracija.example.facts.Item;
+import sbnz.integracija.example.facts.User;
+import sbnz.integracija.example.facts.Reservation;
 import org.apache.commons.lang.time.DateUtils
 import java.util.*
 
-
+rule "Ako korisnik zeli da produži rentiranje dobija dodatni popust od 10%"
+	agenda-group "popusti"
+	lock-on-active true
+	salience -100
+	when 
+		$new : Reservation($korisnikId : user,status == 2, $automobilId : car)
+	then
+		System.out.println("Produzavanje");
+		$new.setPrice($new.getPrice()*0.9);
+		update($new);
+		drools.halt();
+end
 
 rule "Popust od 40% za korisnika koji zeli da rentira automobil koji je rentirao u prethodnih mesec dana"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 40
+	salience 112
 	when 
-		$rezervacija : Reservation($korisnikId : user, discount == 0, status == "REZERVISAN", $automobilId : car)
-        $rezervacije : List() from collect ( Reservation(
+		$new : Reservation($korisnikId : user,status == 0, $automobilId : car)
+        $reservations : List() from collect ( Reservation($datumPocetka : fromDate,
         car == $automobilId,
         user == $korisnikId,
-        status == "ZAVRSEN",
-        $pomerenDatum: DateUtils.addDays(new Date(), -30),
-        eval($pomerenDatum.before(fromDate))       
-        ))
-        eval ( $rezervacije.size() >= 1 )
+        status == 1,
+        $pomeren: DateUtils.addDays(new Date(), -30),
+        eval($pomeren.before(fromDate))       
+        ) 
+        )
+        eval ( $reservations.size() >= 1 )
 	then
-		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 40%");
-		modify ($rezervacija) { setDiscount(40); }		
+		System.out.println("Velicina : "+$reservations.size() + ",KorisnikId = " + $korisnikId + ",NAJVECI");
+		$new.setPrice($new.getPrice()*0.6);
+		update($new);
 		drools.halt();
 		
 end
@@ -31,45 +45,36 @@ end
 rule "Popust od 30% ukoliko je u proteklih mesec dana rentirao automobil"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 30
+	salience 80
 	when 
-		$rezervacija : Reservation($korisnikId : user, discount == 0, status == "REZERVISAN")
-        $rezervacije : List() from collect ( Reservation(
+		$new : Reservation($korisnikId : user,status == 0)
+        $reservations : List() from collect ( Reservation($datumPocetka : fromDate,
         user == $korisnikId,
-        status == "ZAVRSEN",
-        $pomerenDatum: DateUtils.addDays(new Date(), -30),
-        eval($pomerenDatum.before(fromDate))
-        ))
-        eval ( $rezervacije.size() >= 1 )
+        status == 1,
+        $pomeren: DateUtils.addDays(new Date(), -30),
+        eval($pomeren.before(fromDate))
+        ) )
+        eval ( $reservations.size() >= 1 )
 	then
-		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 30%");
-		modify ($rezervacija) { setDiscount(30); }		
+		System.out.println("Velicina : "+$reservations.size() + ",KorisnikId = " + $korisnikId + ",Stara cena: "+$new.getPrice());
+		$new.setPrice($new.getPrice()*0.7);
+		update($new);
 		drools.halt();
 		
 end
 
-rule "Popust od 20% ukoliko korisnik zakaze rentiranje mesec dana ranije"
+rule "Popust od 20% ukoliko korisnik zakaže rentiranje mesec dana ranije"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 20
+	salience 60
 	when 
-		$rezervacija: Reservation($korisnikId : user, discount == 0, status == "REZERVISAN",
-		$pomerenDatum: DateUtils.addDays(new Date(), 30),
-        eval($pomerenDatum.before(fromDate)))
+		$i: Reservation($datumPocetka : fromDate, status == 0,
+		$pomeren: DateUtils.addDays(new Date(), 30),
+        eval($pomeren.before(fromDate))
+		)
 	then
-		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 20%");
-		modify ($rezervacija) { setDiscount(20); }		
-		drools.halt();
-end
-
-rule "Ako korisnik zeli da produzi rentiranje dobija dodatni popust od 10%"
-	agenda-group "popusti"
-	lock-on-active true
-	salience 10
-	when 
-		$rezervacija : Reservation($korisnikId : user, status == "PRODUZAVANJE")
-	then
-		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 10%");
-		modify ($rezervacija) { setDiscount(10); }
+		System.out.println("Stara cena : "+$i.getPrice());
+		$i.setPrice($i.getPrice()*0.8);
+		update($i);
 		drools.halt();
 end

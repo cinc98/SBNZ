@@ -22,7 +22,14 @@ public class Car implements Serializable {
 	private int number;
 	private int searched;
 	private String category;
+<<<<<<< HEAD
 	private String image;
+=======
+<<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Car.java
+	private String image;
+=======
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Car.java
+>>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 
 	@ManyToMany(mappedBy = "cars")
 	Set<User> users = new HashSet<User>();
@@ -121,6 +128,10 @@ public class Car implements Serializable {
 		this.users = users;
 	}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Car.java
+>>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	public String getImage() {
 		return image;
 	}
@@ -129,6 +140,11 @@ public class Car implements Serializable {
 		this.image = image;
 	}
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Car.java
+>>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	@Override
 	public String toString() {
 		return "Car [id=" + id + ", name=" + name + ", model=" + model + ", km=" + km + ", date=" + date + ", price="
