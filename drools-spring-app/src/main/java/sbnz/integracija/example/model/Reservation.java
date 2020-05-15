@@ -17,6 +17,10 @@ public class Reservation implements Serializable {
 	private int discount;
 	private int penaltyPercentage;
 	private double price;
+<<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
+=======
+	
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fromDate;
@@ -48,10 +52,13 @@ public class Reservation implements Serializable {
 	public String getStatus() {
 		return status;
 	}
+<<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
 	
 	public Car getCarObject() {
 		return this.car;
 	}
+=======
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
 
 	public void setStatus(String status) {
 		this.status = status;
@@ -93,10 +100,13 @@ public class Reservation implements Serializable {
 		return user.getId();
 	}
 
+<<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
 	public String getUserame() {
 		return user.getUsername();
 	}
 
+=======
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -131,4 +141,8 @@ public class Reservation implements Serializable {
 				+ untilDate + ", status=" + status + ", price=" + price + "]";
 	}
 
+<<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
+=======
+
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
 }

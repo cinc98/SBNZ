@@ -1,6 +1,7 @@
 package sbnz.integracija.example.controller;
 
 import java.text.ParseException;
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+=======
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,9 +50,15 @@ public class ReservationController {
 	private UserRepository userRepository;
 
 	@RequestMapping(value = "/reserve", method = RequestMethod.POST, produces = "application/json")
+<<<<<<< HEAD
 	public Reservation addDiscount(@RequestParam("carId") String carId, @RequestParam("fromDate") String fromDate,
 			@RequestParam("numberOfDays") int numberOfDays, @RequestParam("username") String username)
 			throws ParseException {
+=======
+	public Reservation addDiscount(@RequestParam("carId") String carId,
+			@RequestParam("fromDate") Date fromDate, @RequestParam("numberOfDays") int numberOfDays,
+			@RequestParam("username") String username) throws ParseException {
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 
 		Reservation newRes = new Reservation();
 		Car car = carRepository.findOneById(Integer.parseInt(carId));
@@ -53,10 +66,15 @@ public class ReservationController {
 		newRes.setCar(car);
 		newRes.setPrice(car.getPrice() * numberOfDays);
 		newRes.setStatus("REZERVISAN");
+<<<<<<< HEAD
 		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 		Date tomorrow = new Date(date1.getTime() + (1000 * 60 * 60 * 24));
 		newRes.setFromDate(tomorrow);
 		newRes.setUntilDate(DateUtils.addDays(tomorrow, numberOfDays));
+=======
+		newRes.setFromDate(fromDate);
+		newRes.setUntilDate(DateUtils.addDays(fromDate, numberOfDays));
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 		newRes.setUser(user);
 
 		newRes = reservationService.discountReservation(reservationRepository.findAll(), newRes);
@@ -64,6 +82,7 @@ public class ReservationController {
 		return newRes;
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<String> saveReservation(@RequestBody Reservation r) {
 
@@ -94,10 +113,17 @@ public class ReservationController {
 	public Reservation cancelDiscount(@RequestParam("reservationId") String reservationId) {
 		Reservation r = reservationRepository.findOneById(Integer.parseInt(reservationId));
 
+=======
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET, produces = "application/json")
+	public Reservation cancelDiscount(@RequestParam("reservationId") String reservationId) {
+		Reservation r = reservationRepository.findOneById(Integer.parseInt(reservationId));
+		
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 		r = reservationService.cancelReservation(reservationRepository.findAll(), r);
 
 		return r;
 	}
+<<<<<<< HEAD
 
 	@RequestMapping(value = "/cancel-agree", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<String> cancelDiscountAgree(@RequestParam("reservationId") String reservationId,
@@ -106,4 +132,6 @@ public class ReservationController {
 
 		return new ResponseEntity<String>("Uspesno ste otkazali rezervaciju!", HttpStatus.OK);
 	}
+=======
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 }

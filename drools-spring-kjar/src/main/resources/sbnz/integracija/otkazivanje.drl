@@ -1,5 +1,6 @@
 package sbnz.integracija;
 
+<<<<<<< HEAD
 import sbnz.integracija.example.facts.Item;
 import sbnz.integracija.example.facts.User;
 import sbnz.integracija.example.facts.Reservation;
@@ -36,12 +37,38 @@ rule "Ukoliko se otkazuje rezervacija do 15 dana pre pocetka rezervacije, naplac
 		System.out.println("Otkazivanje 15 dana ranije : "+$i.getPrice());
 		$i.setPrice($i.getPrice()*0.3);
 		update($i);
+=======
+import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.model.Reservation;
+import org.apache.commons.lang.time.DateUtils
+import java.util.*
+
+
+rule "Ukoliko je prethodnih godina model imao uspesno realizovana rentiranja, cena otkazivanja je 10% za svaku uspesnu godinu, pri cemu cena otkazivanja ne moze da bude veca od 100%"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience Math.min($godineSet.size()*10, 100)
+    when
+        $rezervacija : Reservation($korisnikId : user,$automobilId : car, status == "OTKAZIVANJE")
+        $rezervacije : List() from collect ( Reservation( status == "ZAVRSEN", car == $automobilId ) )
+        $godineSet : Set() from accumulate (
+			Reservation (
+				$godina : untilDate.getYear()
+			) from $rezervacije,
+			collectSet($godina)
+		)
+		eval($godineSet.size() > 0)
+    then
+      	System.out.println("Korisnik " + $korisnikId + " mora da plati " +Math.min($godineSet.size()*10, 100)+"% od cene iznajmljivanja zbog otkazivanja!");
+		modify ($rezervacija) { setPenaltyPercentage(Math.min($godineSet.size()*10, 100)); }		
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 		drools.halt();
 end
 
 rule "Ukoliko postoje rezervacije za odredjeni model pre i posle otkazivane rezervacije, naplacuje se 55% cene rentiranja"
 	agenda-group "otkazivanje"
 	lock-on-active true
+<<<<<<< HEAD
 	salience 100
 	when 
 		$i: Reservation(status == 0,  $automobilId : car, $datumPocetka : fromDate,$datumKraja : untilDate)
@@ -92,15 +119,77 @@ end
 
 
 rule "Besplatno"
+=======
+	salience 55
+	when 
+		$rezervacija: Reservation($korisnikId : user, status == "OTKAZIVANJE",  $automobilId : car, $datumPocetka : fromDate,$datumKraja : untilDate)
+		$rezervacije : List() from collect ( Reservation(status == "REZERVISAN",
+		car == $automobilId,
+        eval($datumPocetka.after(fromDate))   
+        )
+        )
+        eval ( $rezervacije.size() >= 1 ) 
+        $rezervacije1 : List() from collect ( Reservation(status == "REZERVISAN",
+		car == $automobilId,
+        eval($datumKraja.before(fromDate))   
+        )
+        )
+        eval ( $rezervacije1.size() >= 1 ) 
+	then
+		System.out.println("Korisnik " + $korisnikId + " mora da plati 55% od cene iznajmljivanja zbog otkazivanja!");
+		modify ($rezervacija) { setPenaltyPercentage(55); }		
+		drools.halt();
+end
+
+rule "Ukoliko se otkazuje rezervacija do 3 dana pre pocetka rezervacije, naplacuje se 50% cene otkazivanja"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 50
+	when 
+		$rezervacija: Reservation($korisnikId : user, status == "OTKAZIVANJE",
+		$pomerenDatum: DateUtils.addDays(new Date(), 3),
+        eval($pomerenDatum.after(fromDate))
+		)
+	then
+		System.out.println("Korisnik " + $korisnikId + " mora da plati 50% od cene iznajmljivanja zbog otkazivanja!");
+		modify ($rezervacija) { setPenaltyPercentage(50); }		
+		drools.halt();
+end
+
+rule "Ukoliko se otkazuje rezervacija do 15 dana pre pocetka rezervacije, naplacuje se 30% cene otkazivanja"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 30
+	when 
+		$rezervacija: Reservation($korisnikId : user, status == "OTKAZIVANJE",
+		$pomerenDatum: DateUtils.addDays(new Date(), 15),
+        eval($pomerenDatum.after(fromDate))
+		)
+	then
+		System.out.println("Korisnik " + $korisnikId + " mora da plati 30% od cene iznajmljivanja zbog otkazivanja!");
+		modify ($rezervacija) { setPenaltyPercentage(30); }		
+		drools.halt();
+end
+
+rule "Besplatno otkazivanje rezervacije"
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 	agenda-group "otkazivanje"
 	lock-on-active true
 	salience -100
 	when 
+<<<<<<< HEAD
 		$i: Reservation(status == 0)
 		
 	then
 		System.out.println("Besplatno");
 		$i.setPrice(0);
 		update($i);
+=======
+		$rezervacija: Reservation(status == "OTKAZIVANJE")
+		
+	then
+		System.out.println("Otkazivanje je besplatno");
+		modify ($rezervacija) { setPenaltyPercentage(0); }		
+>>>>>>> 529319fafa8044764586ec1a50aba54929f52930
 		drools.halt();
 end
