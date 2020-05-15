@@ -18,7 +18,7 @@ public class CarController {
 
 	@Autowired
 	private CarService carService;
-	
+
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
 	public List<Car> getAll() {
 

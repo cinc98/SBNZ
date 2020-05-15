@@ -5,34 +5,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import sbnz.integracija.example.model.Car;
 import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.model.User;
-import sbnz.integracija.example.repository.CarRepository;
 import sbnz.integracija.example.repository.ReservationRepository;
-import sbnz.integracija.example.repository.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 public class SampleAppController {
-	private static Logger log = LoggerFactory.getLogger(SampleAppController.class);
-
+//	private static Logger log = LoggerFactory.getLogger(SampleAppController.class);
+//
 	private final SampleAppService sampleService;
-	@Autowired
-	private UserRepository repo;
-	@Autowired
-	private CarRepository carRepo;
+//	@Autowired
+//	private UserRepository repo;
+//	@Autowired
+//	private CarRepository carRepo;
 	@Autowired
 	private ReservationRepository resRepo;
 

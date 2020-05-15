@@ -9,24 +9,22 @@ import org.springframework.stereotype.Service;
 import sbnz.integracija.example.model.Car;
 import sbnz.integracija.example.repository.CarRepository;
 
-
 @Service
 public class CarService {
 
 	@Autowired
 	private CarRepository carRepository;
-	
-	//private final KieContainer kieContainer;
+
+	// private final KieContainer kieContainer;
 
 	@Autowired
 	public CarService(KieContainer kieContainer) {
-		//this.kieContainer = kieContainer;
+		// this.kieContainer = kieContainer;
 
 	}
-	
-	public List<Car> getAll(){
+
+	public List<Car> getAll() {
 		return carRepository.findAll();
 	}
-	
-	
+
 }

@@ -1,6 +1,5 @@
 package sbnz.integracija.example;
 
-
 import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
@@ -23,10 +22,8 @@ public class SampleAppService {
 	public SampleAppService(KieContainer kieContainer) {
 		log.info("Initialising a new example session.");
 		this.kieContainer = kieContainer;
-		
-	}
-	
 
+	}
 
 	public Reservation getClassifiedItem(Reservation i) {
 		KieSession kieSession = kieContainer.newKieSession();
@@ -35,10 +32,11 @@ public class SampleAppService {
 		kieSession.dispose();
 		return i;
 	}
-	public Reservation getClassifiedItem(List<Reservation> reservations,Reservation res) {
+
+	public Reservation getClassifiedItem(List<Reservation> reservations, Reservation res) {
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(res);
-		for(Reservation r : reservations)
+		for (Reservation r : reservations)
 			kieSession.insert(r);
 
 		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();

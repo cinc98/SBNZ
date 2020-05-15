@@ -10,16 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import sbnz.integracija.example.model.Car;
 
-public interface CarRepository extends JpaRepository<Car, Long>{
-	
+public interface CarRepository extends JpaRepository<Car, Long> {
+
 	List<Car> findAll();
+
 	Car findOneById(int id);
-	
+
 	@Transactional
 	@Modifying
 	@Query("update Car p set p.number = :number where p.id = :id")
 	int updateCarNumber(@Param("number") int number, @Param("id") int id);
-	
+
 	@Transactional
 	@Modifying
 	@Query("update Car p set p.searched = :searched where p.id = :id")
