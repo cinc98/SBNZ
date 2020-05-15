@@ -17,13 +17,10 @@ public class Reservation implements Serializable {
 	private int discount;
 	private int penaltyPercentage;
 	private double price;
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
 =======
 	
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fromDate;
@@ -55,19 +52,13 @@ public class Reservation implements Serializable {
 	public String getStatus() {
 		return status;
 	}
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	
 	public Car getCarObject() {
 		return this.car;
 	}
-<<<<<<< HEAD
-=======
 =======
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 
 	public void setStatus(String status) {
 		this.status = status;
@@ -109,19 +100,13 @@ public class Reservation implements Serializable {
 		return user.getId();
 	}
 
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	public String getUserame() {
 		return user.getUsername();
 	}
 
-<<<<<<< HEAD
-=======
 =======
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -156,11 +141,8 @@ public class Reservation implements Serializable {
 				+ untilDate + ", status=" + status + ", price=" + price + "]";
 	}
 
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD:drools-spring-app/src/main/java/sbnz/integracija/example/model/Reservation.java
 =======
 
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930:drools-spring-app/src/main/java/sbnz/integracija/example/facts/Reservation.java
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 }

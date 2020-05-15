@@ -3,11 +3,7 @@ package sbnz.integracija.example.service;
 <<<<<<< HEAD
 import java.util.ArrayList;
 =======
-<<<<<<< HEAD
-import java.util.ArrayList;
-=======
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
@@ -23,12 +19,7 @@ import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.repository.CarRepository;
 import sbnz.integracija.example.repository.ReservationRepository;
 =======
-<<<<<<< HEAD
-import sbnz.integracija.example.repository.CarRepository;
-import sbnz.integracija.example.repository.ReservationRepository;
-=======
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 
 @Service
 public class ReservationService {
@@ -36,20 +27,14 @@ public class ReservationService {
 
 	private final KieContainer kieContainer;
 <<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
 	@Autowired
 	private CarRepository carRepository;
-<<<<<<< HEAD
-=======
 =======
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 
 	@Autowired
 	public ReservationService(KieContainer kieContainer) {
@@ -90,9 +75,6 @@ public class ReservationService {
 		return r;
 	}
 <<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 	
 	public List<Reservation> getUserReservations(String username) {
 		List<Reservation> retList = new ArrayList<Reservation>();
@@ -107,10 +89,7 @@ public class ReservationService {
 	}
 	
 	
-<<<<<<< HEAD
-=======
 =======
 >>>>>>> 529319fafa8044764586ec1a50aba54929f52930
->>>>>>> 978cc5ccb0b90631a2c9c26e526f0bd78620a3ca
 
 }
