@@ -2,7 +2,7 @@
     <v-dialog v-model="show" persistent max-width="500">
       <v-card>
         <v-card-title>
-          <span class="headline">User Profile</span>
+          <span class="headline">Reserve car</span>
         </v-card-title>
         <div class="resevationFormInputs">
             <span class="inputSpans">
@@ -134,7 +134,7 @@ export default {
              })
                     .then((response) => {
                         this.dialogToggleClose();
-                        alert("Uspesno ste rezeresvisali");
+                        alert(response.data);
                         
                     })
                     .catch((error) => {

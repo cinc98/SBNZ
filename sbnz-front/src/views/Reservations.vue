@@ -32,15 +32,17 @@
                         <td>{{r.price}} $</td>
                         <td>{{r.discount}} %</td>
                         <td>{{r.price*((100-r.discount)/100)}} $</td>
-                        <td>{{r.fromDate.split('T')[0]}}</td>
-                        <td>{{r.untilDate.split('T')[0]}}</td>
+                        <td>{{new Date(r.fromDate).toLocaleString().split(",")[0]}}</td>
+                        <td>{{new Date(r.untilDate).toLocaleString().split(",")[0]}}</td>
                         <td><v-btn @click="cancelReservation(r.id)">Cancel</v-btn></td>
+                        <td><v-btn @click="extendReservation(r.id,r.untilDate)" >Extend</v-btn></td>
                     </tr>
                     </tbody>
                 </template>
                 </v-simple-table>
             </div> 
             <cancel-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:idRes="this.idRes" v-bind:penalty="this.penalty" v-bind:price="this.price"  v-bind:show="this.dialogToggle"/>
+            <extend-dialog v-bind:dialogToggle="this.toggleExtendDialog" v-bind:untilDate="this.untilDate" v-bind:idRes="this.idResE"  v-bind:show="this.dialogExtendToggle"/>
         </div>
     </div>
 </template>
@@ -50,17 +52,21 @@ import axios from 'axios';
 import Navigation from '../components/Navigation.vue';
 import AppBar from '../components/AppBar.vue';
 import CancelDialog from '../components/CancelDialog.vue';
+import ExtendDialog from '../components//ExtendDialog.vue';
 
 
 export default {
     name: "Home",
     data() {
         return {
-            dialogToggle:false,
-            penalty:'',
-            price:'',
-            idRes:''
-         
+            dialogToggle : false,
+            dialogExtendToggle : false,
+            penalty : '',
+            price : '',
+            idRes : '',
+            idResE : '',
+            untilDate: '',
+                
         };
     },
     computed:{
@@ -71,7 +77,8 @@ export default {
     components:{
         Navigation,
         AppBar,
-        CancelDialog
+        CancelDialog,
+        ExtendDialog
     },
     methods:{
         cancelReservation(id){
@@ -87,8 +94,17 @@ export default {
                 });
           
         },
+        extendReservation(id,date){
+            this.untilDate=date;
+            this.idResE=id;
+            this.toggleExtendDialog();
+
+        },
         toggleDialogClick() {
             this.dialogToggle = !this.dialogToggle;
+        },
+        toggleExtendDialog() {
+            this.dialogExtendToggle = !this.dialogExtendToggle;
         },
         addActiveReservations(a) {
             this.$store.commit('fetchActiveReservations', a);

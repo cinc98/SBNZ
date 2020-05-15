@@ -64,6 +64,26 @@ public class ReservationController {
 		return newRes;
 	}
 
+	@RequestMapping(value = "/extend", method = RequestMethod.POST, produces = "application/json")
+	public Reservation extendReservation(@RequestParam("idRes") String idRes, @RequestParam("fromDate") String fromDate,
+			@RequestParam("numberOfDays") int numberOfDays) throws ParseException {
+
+		Reservation r = reservationRepository.findOneById(Integer.parseInt(idRes));
+		r.setPrice(r.getCarObject().getPrice() * numberOfDays);
+		r.setStatus("PRODUZAVANJE");
+		Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+		Date tomorrow = new Date(date1.getTime() + (1000 * 60 * 60 * 24));
+		r.setFromDate(tomorrow);
+		r.setUntilDate(DateUtils.addDays(date1, numberOfDays));
+		System.out.println(fromDate);
+		System.out.println(numberOfDays);
+
+		r = reservationService.discountReservation(reservationRepository.findAll(), r);
+
+		return r;
+
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<String> saveReservation(@RequestBody Reservation r) {
 
@@ -79,7 +99,7 @@ public class ReservationController {
 		newRes.setDiscount(r.getDiscount());
 		reservationRepository.save(newRes);
 
-		return new ResponseEntity<String>("superiska", HttpStatus.CREATED);
+		return new ResponseEntity<String>("Uspesno ste rezervisali vozilo!", HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/all-active", method = RequestMethod.GET, produces = "application/json")
@@ -102,7 +122,7 @@ public class ReservationController {
 	@RequestMapping(value = "/cancel-agree", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<String> cancelDiscountAgree(@RequestParam("reservationId") String reservationId,
 			@RequestParam("penalty") String penalty) {
-		
+
 		@SuppressWarnings("unused")
 		int i = reservationRepository.updateStatus("OTKAZANO", Integer.parseInt(penalty),
 				Integer.parseInt(reservationId));
