@@ -17,7 +17,6 @@ public class Reservation implements Serializable {
 	private int discount;
 	private int penaltyPercentage;
 	private double price;
-	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fromDate;
@@ -48,6 +47,10 @@ public class Reservation implements Serializable {
 
 	public String getStatus() {
 		return status;
+	}
+	
+	public Car getCarObject() {
+		return this.car;
 	}
 
 	public void setStatus(String status) {
@@ -90,6 +93,10 @@ public class Reservation implements Serializable {
 		return user.getId();
 	}
 
+	public String getUserame() {
+		return user.getUsername();
+	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -123,6 +130,5 @@ public class Reservation implements Serializable {
 		return "Reservation [id=" + id + ", user=" + user + ", car=" + car + ", fromDate=" + fromDate + ", untilDate="
 				+ untilDate + ", status=" + status + ", price=" + price + "]";
 	}
-
 
 }

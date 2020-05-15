@@ -20,9 +20,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 	List<Reservation> findByCarId(int carId);
 
+	
+
 	@Transactional
 	@Modifying
-	@Query("update Reservation p set p.status = :status where p.id = :id")
-	int updateStatus(@Param("status") int status, @Param("id") int id);
+	@Query("update Reservation p set p.status = :status, p.penaltyPercentage =:penalty where p.id = :id")
+	int updateStatus(@Param("status") String status,@Param("penalty") int penalty, @Param("id") int id);
 
 }

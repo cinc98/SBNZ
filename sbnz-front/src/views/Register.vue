@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'Register',
     data() {
@@ -61,12 +63,22 @@ export default {
         },
         register(e){
             e.preventDefault();
-            if(this.password !== this.confirm_password){
-                alert("The passwords entered do not match!")
+            if(this.username === '' || this.password === ''){
+                alert("Popunite prazna polja!");
             }else{
-                alert(this.username +' '+this.password+' '+ this.confirm_password)
-                this.$router.push('/');
-            }
+            if(this.password !== this.confirm_password){
+                alert("Unesene lozinke se razlikuju!")
+            }else{
+                axios.post(`http://localhost:8080/user/register?username=${this.username}&password=${this.password}`)
+                    .then((response) => {
+                        alert(response.data);
+                        this.$router.push('/');
+
+                    })
+                    .catch((error) => {
+                        alert(error.response.data);
+                    });
+            }}
        
         }
 

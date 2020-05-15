@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'Login',
     data() {
@@ -55,8 +57,22 @@ export default {
         
         },
         login(){
-            alert(this.username +' '+this.password);
-            this.$router.push('/home');
+            if(this.username === '' || this.password === ''){
+                alert('Pogresno korisnicko ime ili lozinka!');
+            }else{
+                  axios.post(`http://localhost:8080/user/login?username=${this.username}&password=${this.password}`)
+                    .then((response) => {
+                        alert(response.data);
+                        sessionStorage.setItem('username', this.username);
+                        this.$router.push('/home');
+
+                    })
+                    .catch((error) => {
+                        alert(error.response.data);
+                        this.username='';
+                        this.password='';
+                    });
+            }
         }
     }
 
