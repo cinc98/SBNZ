@@ -1,0 +1,140 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.*;
+import org.apache.commons.lang.time.DateUtils
+import java.util.*
+
+agenda-group "pretraga"
+rule "ASTRA"
+	no-loop
+	salience($dp.priority)
+
+	
+	when
+		$predlog: Search($uslovi: uslovi)
+		$dp: Priority($p: priority >= 3) from accumulate(
+			$s: Characteristic (
+				name == "Nemacka" ||
+				name == "Hecbek" ||
+				name == "Benzin" ||
+				name == "Manual" ||
+				name == "ABS" ||
+				name == "Kozna"
+			) from $uslovi,
+			init(Priority $priority = new Priority(6);),
+			action($priority.addSymptom();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("ASTRA");}
+		System.out.println("Model za vas je ASTRA");
+end
+rule "CITROEN"
+	no-loop
+	salience($dp.priority)
+
+	when
+		$predlog: Search($uslovi: uslovi)
+		$dp: Priority($p: priority >= 3) from accumulate(
+			$s: Characteristic (
+				name == "Francuska" ||
+				name == "Limuzina" ||
+				name == "Auto" ||
+				name == "Navigacija"
+			) from $uslovi,
+			init(Priority $priority = new Priority(4);),
+			action($priority.addSymptom();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("CITROEN");}
+		System.out.println("Model za vas je CITROEN");
+end
+rule "FORD"
+	no-loop
+	salience($dp.priority)
+
+	when
+		$predlog: Search($uslovi: uslovi)
+		$dp: Priority($p: priority >= 3) from accumulate(
+			$s: Characteristic (
+				name == "Amerika" ||
+				name == "SUV" ||
+				name == "Gas" ||
+				name == "ESP" ||
+				name == "Manual" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(5);),
+			action($priority.addSymptom();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("FORD");}
+		System.out.println("Model za vas je FORD");
+end
+rule "BMW"
+	no-loop
+	salience($dp.priority + 10)
+
+	when
+		$predlog: Search($uslovi: uslovi)
+		$dp: Priority($p: priority == 5) from accumulate(
+			$s: Characteristic (
+				name == "Nemacka" ||
+				name == "SUV" ||
+				name == "Benzin" ||
+				name == "Auto" ||
+				name == "360 kamera" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(10);),
+			action($priority.addSymptom();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("BMW");}
+		System.out.println("Model za vas je BMW");
+end
+rule "MERCEDES"
+	no-loop
+	salience($dp.priority + 10)
+
+	when
+		$predlog: Search($uslovi: uslovi)
+		$dp: Priority($p: priority == 5) from accumulate(
+			$s: Characteristic (
+				name == "Nemacka" ||
+				name == "Limuzina" ||
+				name == "Benzin" ||
+				name == "Auto" ||
+				name == "Sportska sedista" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(10);),
+			action($priority.addSymptom();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("MERCEDES");}
+		System.out.println("Model za vas je MERCEDES");
+end
+rule "VOLVO"
+	no-loop
+	salience($dp.priority + 10)
+
+	when
+		$predlog: Search($uslovi: uslovi)
+		$dp: Priority($p: priority == 5) from accumulate(
+			$s: Characteristic (
+				name == "Svedska" ||
+				name == "SUV" ||
+				name == "Benzin" ||
+				name == "Auto" ||
+				name == "LED svetla" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(10);),
+			action($priority.addSymptom();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("VOLVO");}
+		System.out.println("Model za vas je VOLVO");
+end
