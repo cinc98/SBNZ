@@ -1,28 +1,41 @@
 package sbnz.integracija.example.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.model.User;
 import sbnz.integracija.example.repository.UserRepository;
 
 @Service
 public class UserService {
 
-	// private final KieContainer kieContainer;
+	private final KieContainer kieContainer;
 
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
 	public UserService(KieContainer kieContainer) {
-		// this.kieContainer = kieContainer;
+		 this.kieContainer = kieContainer;
 
+	}
+	public User setCategory(User u,List<Reservation> reservations) {
+		KieSession kieSession = kieContainer.newKieSession();
+		kieSession.insert(u);
+		for (Reservation res : reservations)
+			kieSession.insert(res);
+		kieSession.getAgenda().getAgendaGroup("kategorije").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		return u;
 	}
 
 	public ResponseEntity<String> registerUser(String username, String password) {

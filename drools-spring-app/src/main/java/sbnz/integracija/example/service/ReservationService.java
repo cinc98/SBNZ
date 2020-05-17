@@ -11,11 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.inject.Singleton;
+
+import sbnz.integracija.example.SampleApp;
 import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.repository.CarRepository;
 import sbnz.integracija.example.repository.ReservationRepository;
 
 @Service
+@Singleton
 public class ReservationService {
 	private static Logger log = LoggerFactory.getLogger(ReservationService.class);
 
@@ -35,34 +39,37 @@ public class ReservationService {
 	}
 
 	public Reservation discountReservation(List<Reservation> reservations, Reservation r) {
-		KieSession kieSession = kieContainer.newKieSession();
+		KieSession kieSession = SampleApp.kieSessions.get("kieSession-DiscountReservations");
+        if(kieSession == null) {
+        	kieSession = kieContainer.newKieSession();
+        	SampleApp.kieSessions.put("kieSession-reservations",kieSession);
+        	for (Reservation res : reservations)
+    			kieSession.insert(res);
+        } 
 		kieSession.insert(r);
-		for (Reservation res : reservations)
-			kieSession.insert(res);
 		kieSession.getAgenda().getAgendaGroup("popusti").setFocus();
 		kieSession.fireAllRules();
-		kieSession.dispose();
 		return r;
 	}
 
 	public Reservation cancelReservation(List<Reservation> reservations, Reservation r) {
-		KieSession kieSession = kieContainer.newKieSession();
+		KieSession kieSession = SampleApp.kieSessions.get("kieSession-CancelReservations");
+		
+        if(kieSession == null) {
+        	kieSession = kieContainer.newKieSession();
+        	SampleApp.kieSessions.put("kieSession-CancelReservations",kieSession);
+        	for (Reservation res : reservations) {
+    			if (res.getId() != r.getId()) {
+    				kieSession.insert(res);
+    			}
+    		}
+        } 
 		kieSession.insert(r);
 		FactHandle handle = kieSession.getFactHandle(r);
-
 		r.setStatus("OTKAZIVANJE");
 		kieSession.update(handle, r);
-		for (Reservation res : reservations) {
-			if (res.getId() != r.getId()) {
-				kieSession.insert(res);
-
-			}
-
-		}
-
 		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
 		kieSession.fireAllRules();
-		kieSession.dispose();
 		return r;
 	}
 

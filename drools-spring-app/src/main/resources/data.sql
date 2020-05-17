@@ -3,7 +3,7 @@ VALUES (100,'bronza', '123', '2020-06-10', 'stefan');
 INSERT INTO sbnz.user 
 VALUES (200,'bronza', '123', '2020-06-10', 'cinc');
 INSERT INTO sbnz.user 
-VALUES (300,'bronza', '123', '2020-06-10', 'miki');
+VALUES (300,'bronza', '123', '2019-06-10', 'miki');
 INSERT INTO sbnz.user 
 VALUES (400,'bronza', '123', '2020-06-10', 'mile');
 
@@ -55,9 +55,9 @@ VALUES (600,20,'2020-05-15',0, 3000, 'REZERVISAN','2020-05-16', 4,300);
 INSERT INTO sbnz.reservation --60%
 VALUES (700,20,'2020-05-15',0, 3000, 'REZERVISAN','2020-05-16', 5,300);
 INSERT INTO sbnz.reservation 
-VALUES (800,20,'2013-05-15',0, 3000, 'ZAVRSEN','2013-05-16', 5,300);
+VALUES (800,20,'2020-05-15',0, 3000, 'ZAVRSEN','2013-05-16', 5,300);
 INSERT INTO sbnz.reservation 
-VALUES (900,20,'2014-05-15',0, 3000, 'ZAVRSEN','2014-05-16', 5,300);
+VALUES (900,20,'2020-05-15',0, 3000, 'ZAVRSEN','2014-05-16', 5,300);
 INSERT INTO sbnz.reservation 
 VALUES (1000,20,'2015-05-15',0, 3000, 'ZAVRSEN','2015-05-16', 5,300);
 INSERT INTO sbnz.reservation 
