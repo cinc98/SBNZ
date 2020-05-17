@@ -15,7 +15,7 @@ public class Priority {
 		this.allSatisfied = false;
 	}
 	
-	public void addSymptom() {
+	public void addModel() {
 		if (allSatisfied) {
 			this.priority += 5;
 		}

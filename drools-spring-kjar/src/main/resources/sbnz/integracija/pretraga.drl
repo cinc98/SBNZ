@@ -5,7 +5,7 @@ import org.apache.commons.lang.time.DateUtils
 import java.util.*
 
 agenda-group "pretraga"
-rule "ASTRA"
+rule "OPEL"
 	no-loop
 	salience($dp.priority)
 
@@ -14,20 +14,20 @@ rule "ASTRA"
 		$predlog: Search($uslovi: uslovi)
 		$dp: Priority($p: priority >= 3) from accumulate(
 			$s: Characteristic (
-				name == "Nemacka" ||
-				name == "Hecbek" ||
-				name == "Benzin" ||
-				name == "Manual" ||
+				name == "Germany" ||
+				name == "Small Car" ||
+				name == "Petrol" ||
+				name == "Manual gearbox" ||
 				name == "ABS" ||
-				name == "Kozna"
+				name == "Full leather"
 			) from $uslovi,
 			init(Priority $priority = new Priority(6);),
-			action($priority.addSymptom();),
+			action($priority.addModel();),
 			result($priority)
 		)
 	then
-		modify($predlog){setModel("ASTRA");}
-		System.out.println("Model za vas je ASTRA");
+		modify($predlog){setModel("OPEL");}
+		System.out.println("Model za vas je OPEL");
 end
 rule "CITROEN"
 	no-loop
@@ -37,13 +37,13 @@ rule "CITROEN"
 		$predlog: Search($uslovi: uslovi)
 		$dp: Priority($p: priority >= 3) from accumulate(
 			$s: Characteristic (
-				name == "Francuska" ||
-				name == "Limuzina" ||
-				name == "Auto" ||
-				name == "Navigacija"
+				name == "France" ||
+				name == "Saloon" ||
+				name == "Automatic transmission" ||
+				name == "Navigation system"
 			) from $uslovi,
 			init(Priority $priority = new Priority(4);),
-			action($priority.addSymptom();),
+			action($priority.addModel();),
 			result($priority)
 		)
 	then
@@ -58,14 +58,14 @@ rule "FORD"
 		$predlog: Search($uslovi: uslovi)
 		$dp: Priority($p: priority >= 3) from accumulate(
 			$s: Characteristic (
-				name == "Amerika" ||
+				name == "USA" ||
 				name == "SUV" ||
-				name == "Gas" ||
+				name == "LPG" ||
 				name == "ESP" ||
-				name == "Manual" 
+				name == "Manual gearbox" 
 			) from $uslovi,
 			init(Priority $priority = new Priority(5);),
-			action($priority.addSymptom();),
+			action($priority.addModel();),
 			result($priority)
 		)
 	then
@@ -80,14 +80,14 @@ rule "BMW"
 		$predlog: Search($uslovi: uslovi)
 		$dp: Priority($p: priority == 5) from accumulate(
 			$s: Characteristic (
-				name == "Nemacka" ||
+				name == "Germany" ||
 				name == "SUV" ||
-				name == "Benzin" ||
-				name == "Auto" ||
-				name == "360 kamera" 
+				name == "Petrol" ||
+				name == "Automatic transmission" ||
+				name == "360 camera" 
 			) from $uslovi,
 			init(Priority $priority = new Priority(10);),
-			action($priority.addSymptom();),
+			action($priority.addModel();),
 			result($priority)
 		)
 	then
@@ -102,14 +102,14 @@ rule "MERCEDES"
 		$predlog: Search($uslovi: uslovi)
 		$dp: Priority($p: priority == 5) from accumulate(
 			$s: Characteristic (
-				name == "Nemacka" ||
-				name == "Limuzina" ||
-				name == "Benzin" ||
-				name == "Auto" ||
-				name == "Sportska sedista" 
+				name == "Germany" ||
+				name == "Saloon" ||
+				name == "Petrol" ||
+				name == "Automatic transmission" ||
+				name == "Sport seats" 
 			) from $uslovi,
 			init(Priority $priority = new Priority(10);),
-			action($priority.addSymptom();),
+			action($priority.addModel();),
 			result($priority)
 		)
 	then
@@ -124,17 +124,106 @@ rule "VOLVO"
 		$predlog: Search($uslovi: uslovi)
 		$dp: Priority($p: priority == 5) from accumulate(
 			$s: Characteristic (
-				name == "Svedska" ||
+				name == "Sweden" ||
 				name == "SUV" ||
-				name == "Benzin" ||
-				name == "Auto" ||
-				name == "LED svetla" 
+				name == "Petrol" ||
+				name == "Automatic transmission" ||
+				name == "LED headlights" 
 			) from $uslovi,
 			init(Priority $priority = new Priority(10);),
-			action($priority.addSymptom();),
+			action($priority.addModel();),
 			result($priority)
 		)
 	then
 		modify($predlog){setModel("VOLVO");}
 		System.out.println("Model za vas je VOLVO");
+end
+
+rule "FERARI"
+	no-loop
+	salience($dp.priority + 50 + $dpSpec.priority)
+
+	when
+		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi)
+		$dp: Priority($p: priority >= 1) from accumulate(
+			$s: Characteristic (
+				name == "Italy" ||
+				name == "Coupe" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(2);),
+			action($priority.addModel();),
+			result($priority)
+		)
+		$dpSpec: Priority($pSpec: priority >= 1) from accumulate(
+			$s: Characteristic (
+				name == "Night vision assist" ||
+				name == "Heated streering wheel" || 
+				name == "Bi-xenon headlights" 
+			) from $spec,
+			init(Priority $priority = new Priority(3);),
+			action($priority.addModel();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("FERARI");}
+		System.out.println("Model za vas je FERARI");
+end
+rule "BUGATI"
+	no-loop
+	salience($dp.priority + 50 + $dpSpec.priority)
+
+	when
+		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi)
+		$dp: Priority($p: priority >= 1) from accumulate(
+			$s: Characteristic (
+				name == "France" ||
+				name == "Cabriolet" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(2);),
+			action($priority.addModel();),
+			result($priority)
+		)
+		$dpSpec: Priority($pSpec: priority >= 1) from accumulate(
+			$s: Characteristic (
+				name == "Sports suspension" ||
+				name == "Hands-free" || 
+				name == "Digital cockpit" 
+			) from $spec,
+			init(Priority $priority = new Priority(3);),
+			action($priority.addModel();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("BUGATI");}
+		System.out.println("Model za vas je BUGATI");
+end
+
+rule "BENTLI"
+	no-loop
+	salience($dp.priority + 50 + $dpSpec.priority)
+
+	when
+		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi)
+		$dp: Priority($p: priority >= 1) from accumulate(
+			$s: Characteristic (
+				name == "United Kingdom" ||
+				name == "Saloon" 
+			) from $uslovi,
+			init(Priority $priority = new Priority(2);),
+			action($priority.addModel();),
+			result($priority)
+		)
+		$dpSpec: Priority($pSpec: priority >= 1) from accumulate(
+			$s: Characteristic (
+				name == "Voice control" ||
+				name == "ISOFIX" || 
+				name == "Start-stop system" 
+			) from $spec,
+			init(Priority $priority = new Priority(3);),
+			action($priority.addModel();),
+			result($priority)
+		)
+	then
+		modify($predlog){setModel("BENTLI");}
+		System.out.println("Model za vas je BENTLI");
 end

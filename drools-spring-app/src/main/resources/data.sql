@@ -17,6 +17,26 @@ INSERT INTO sbnz.car
 VALUES (4,'prva','2018-02-17','https://i.ytimg.com/vi/_fokJ36y8wM/maxresdefault.jpg',30000,'Insignia', 'OPEL',0,25,0);
 INSERT INTO sbnz.car  
 VALUES (5,'prva','2020-01-9','https://autorepublika.com/wp-content/uploads/2019/08/bmw-x5-protection2.jpg',5000,'X5', 'BMW',0,50,0);
+INSERT INTO sbnz.car  
+VALUES (6,'prva','2020-02-17','https://41cef548pyo610dh50468nkk-wpengine.netdna-ssl.com/wp-content/uploads/2020/02/2020-C5-Concept_front..jpg',200000,'C5', 'CITROEN',0,40,0);
+INSERT INTO sbnz.car  
+VALUES (7,'prva','2017-01-9','https://rentacarbelgrade.rs/wordpress/wp-content/uploads/2018/01/Citroen-C5.jpg',47000,'C5', 'CITROEN',0,40,0);
+INSERT INTO sbnz.car  
+VALUES (8,'prva','2011-06-17','https://img.aaaauto.eu/thumb/900251879_2_1024x768x75.jpg',150000,'Kuga', 'FORD',0,30,0);
+INSERT INTO sbnz.car  
+VALUES (9,'prva','2019-01-9','https://fordcms.blob.core.windows.net/media/Serbia/_Profiles/24613dd5/a6ac7cdd/1-1.jpg?v=636728649790000000',47000,'Kuga', 'FORD',0,50,0);
+INSERT INTO sbnz.car  
+VALUES (10,'prva','2020-01-19','https://autorepublika.com/wp-content/uploads/2019/05/Ferrari.jpg',1000,'812 Superfast', 'FERARI',0,200,0);
+INSERT INTO sbnz.car  
+VALUES (11,'prva','2018-10-19','https://autorepublika.com/wp-content/uploads/2019/06/xc90_armoured_-_exterior_1.jpg',47000,'XC90', 'VOLVO',0,70,0);
+INSERT INTO sbnz.car  
+VALUES (12,'prva','2018-01-9','https://autorepublika.com/wp-content/uploads/2017/09/1-223.jpg',9000,'S63 AMG', 'MERCEDES',0,100,0);
+INSERT INTO sbnz.car  
+VALUES (13,'prva','2017-07-9','https://img.drivemag.net/media/default/0001/96/bentley-continental-gt-convertible-7337-default-large.jpeg',170000,'Continental GT', 'BENTLI',0,200,0);
+INSERT INTO sbnz.car  
+VALUES (14,'prva','2019-08-18','https://autorepublika.com/wp-content/uploads/2019/09/2-4.jpg',29000,'Chiron Sport', 'BUGATI',0,300,0);
+
+
 
 INSERT INTO sbnz.reservation --dzabe
 VALUES (100,20,'2020-06-24',0, 3000, 'REZERVISAN','2020-06-25', 1,100);

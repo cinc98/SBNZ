@@ -13,6 +13,7 @@ import sbnz.integracija.example.model.Car;
 public interface CarRepository extends JpaRepository<Car, Long> {
 
 	List<Car> findAll();
+	List<Car> findByName(String name);
 
 	Car findOneById(int id);
 
