@@ -1,4 +1,5 @@
 <template>
+<div class="cards">
         <v-card
             class="mx-auto my-12 carCards"
             max-width="350"
@@ -29,7 +30,7 @@
                 <reserve-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:carId="carId" v-bind:show="this.dialogToggle"/> 
 
         </v-card>
-
+</div>
 </template>
 
 <script>
@@ -57,7 +58,10 @@ export default {
 
 <style>
 .carCards{
-    height: auto !important;
+    height: 460px !important;
+}
+.cards{
+    margin-left: 50px;
 }
 
 </style>

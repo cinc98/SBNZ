@@ -44,6 +44,7 @@ public class SearchController {
 		
 		s.getSpecificniUslovi().add(new Characteristic(s3));
 		s = service.searchCar(s);
+		
 
 		return s;
 	}

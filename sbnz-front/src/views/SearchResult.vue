@@ -26,7 +26,7 @@ import SearchDialog from '../components/SearchDialog.vue'
 
 
 export default {
-    name: "Home",
+    name: "SearchResult",
     data() {
         return {
             cars: null,
@@ -45,7 +45,17 @@ export default {
         },
     },
     created(){
-           axios.get('http://localhost:8080/car/all')
+           axios.get(`http://localhost:8080/car/model?model=${this.$store.state.model}`)
+                .then((response) => {
+                    this.cars=response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        
+    },
+    updated(){
+           axios.get(`http://localhost:8080/car/model?model=${this.$store.state.model}`)
                 .then((response) => {
                     this.cars=response.data;
                 })

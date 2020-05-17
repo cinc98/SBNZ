@@ -160,10 +160,9 @@ export default {
 .resevationFormInputs span:nth-child(1){
         flex-basis: 150px;
         text-align: left;
-        
         justify-content: center;
 
-    }
+}
 .showPrice{
     display: flex;
 }

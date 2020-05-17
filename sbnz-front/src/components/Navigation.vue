@@ -19,7 +19,7 @@
       <v-divider></v-divider>
 
         <v-list >
-            <v-list-item link to="/home">
+          <v-list-item link to="/home">
                 <v-list-item-icon>
                 <v-icon>home</v-icon>
                 </v-list-item-icon>
@@ -28,15 +28,25 @@
                 <v-list-item-title>Home</v-list-item-title>
                 </v-list-item-content>
           </v-list-item>
-                    <v-list-item link to="/reservations">
+          <v-list-item link to="/reservations">
                 <v-list-item-icon>
-                <v-icon>home</v-icon>
+                <v-icon>list</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
                 <v-list-item-title>Reservations</v-list-item-title>
                 </v-list-item-content>
           </v-list-item>
+          <v-list-item @click="dialogToggleSearchasd" link>
+                <v-list-item-icon>
+                <v-icon>search</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                <v-list-item-title>Search</v-list-item-title>
+                </v-list-item-content>
+          </v-list-item>
+          
         </v-list>
         <template v-slot:append>
             <div class="pa-2">
@@ -54,6 +64,7 @@ export default {
             return sessionStorage.getItem('username');
         },
     },
+    props:['dialogToggleSearchasd'],
     methods:{
       logout(){
         sessionStorage.removeItem('username');

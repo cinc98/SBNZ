@@ -3,7 +3,7 @@
         <app-bar/>
         <div class="home">
             <div class="nav">
-                <navigation/>
+                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogSearchClick"/>
             </div>
 
             <div>
@@ -41,6 +41,7 @@
                 </template>
                 </v-simple-table>
             </div> 
+            <search-dialog v-bind:dialogToggleS="this.toggleDialogSearchClick" v-bind:show="this.dialogToggleSearch"/>
             <cancel-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:idRes="this.idRes" v-bind:penalty="this.penalty" v-bind:price="this.price"  v-bind:show="this.dialogToggle"/>
             <extend-dialog v-bind:dialogToggle="this.toggleExtendDialog" v-bind:untilDate="this.untilDate" v-bind:idRes="this.idResE"  v-bind:show="this.dialogExtendToggle"/>
         </div>
@@ -52,7 +53,8 @@ import axios from 'axios';
 import Navigation from '../components/Navigation.vue';
 import AppBar from '../components/AppBar.vue';
 import CancelDialog from '../components/CancelDialog.vue';
-import ExtendDialog from '../components//ExtendDialog.vue';
+import ExtendDialog from '../components/ExtendDialog.vue';
+import SearchDialog from '../components/SearchDialog.vue';
 
 
 export default {
@@ -61,6 +63,7 @@ export default {
         return {
             dialogToggle : false,
             dialogExtendToggle : false,
+            dialogToggleSearch : false,
             penalty : '',
             price : '',
             idRes : '',
@@ -78,7 +81,8 @@ export default {
         Navigation,
         AppBar,
         CancelDialog,
-        ExtendDialog
+        ExtendDialog,
+        SearchDialog
     },
     methods:{
         cancelReservation(id){
@@ -102,6 +106,9 @@ export default {
         },
         toggleDialogClick() {
             this.dialogToggle = !this.dialogToggle;
+        },
+        toggleDialogSearchClick() {
+            this.dialogToggleSearch = !this.dialogToggleSearch;
         },
         toggleExtendDialog() {
             this.dialogExtendToggle = !this.dialogExtendToggle;
