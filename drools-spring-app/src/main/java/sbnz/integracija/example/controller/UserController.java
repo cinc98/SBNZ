@@ -43,7 +43,9 @@ public class UserController {
 		List<User> t = userRepository.findAll();
 		List<User> ret = new ArrayList<User>();
 		for (User u : t)
-			ret.add(userService.setCategory(u, reservationRepository.findAll()));
+			if(!u.getUsername().equals("admin")) {
+				ret.add(userService.setCategory(u, reservationRepository.findAll()));
+			}
 		return ret;
 	}
 	

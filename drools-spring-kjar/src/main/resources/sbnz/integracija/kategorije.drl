@@ -12,7 +12,7 @@ rule "GOLD"
 	when 
 		$user: User($korisnikId : id)
 		$rezervacija : Reservation()
-		$rezervacije : List() from collect ( Reservation(user == $korisnikId, 
+		$rezervacije : List() from collect ( Reservation(user == $korisnikId, status == "ZAVRSEN",
 		$fromDate : fromDate,
 		$pomerenDatum: DateUtils.addMonths(new Date(), -12),
 		eval($pomerenDatum.before($fromDate))) )
@@ -37,7 +37,7 @@ rule "SILVER"
 		$pomerenDatum: DateUtils.addMonths(new Date(), -6),
 		eval($pomerenDatum.after($fromDate)))
 		$rezervacija : Reservation()
-		$rezervacije : List() from collect ( Reservation(user == $korisnikId) )
+		$rezervacije : List() from collect ( Reservation(user == $korisnikId, status == "ZAVRSEN") )
         $total : Number(intValue >= 500) from accumulate(
 			 $s: Reservation () from $rezervacije,
 	         init( int intValue = 0; ),
