@@ -1,5 +1,6 @@
 package sbnz.integracija.example.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,5 +68,16 @@ public class UserService {
 		return new ResponseEntity<String>("Pogresno korisnicko ime ili lozinka!", HttpStatus.BAD_REQUEST);
 
 	}
+	
+	public List<User> getAllUsers(){
+		List<User> users = new ArrayList<User>();
+		for(User u : userRepository.findAll()) {
+			if(!u.getUsername().equals("admin")) {
+				users.add(u);
+			}
+		}
+		
+		return users;
+	};
 
 }

@@ -6,11 +6,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     activeReservations: [],
-    model: ''
+    model: '',
+    users: [],
   },
   mutations: {
     addModel(state, model) {
       state.model = model;
+    },
+    fetchUsers(state, users) {
+      state.users.length = 0;
+      users.forEach((user) => {
+        state.users.push(user);
+      });
     },
     fetchActiveReservations(state, reservations) {
       state.activeReservations.length = 0;

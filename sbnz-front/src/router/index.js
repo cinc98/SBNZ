@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Reservations from '../views/Reservations.vue';
 import SearchResult from '../views/SearchResult.vue';
+import Users from '../views/Users.vue';
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/search-result',
     name: 'SearchResult',
     component: SearchResult
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users
   },
 
 ]

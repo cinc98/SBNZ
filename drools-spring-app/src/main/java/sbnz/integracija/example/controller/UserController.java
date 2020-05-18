@@ -39,12 +39,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-	public List<User> setCategory() {
+	public List<User> getAllUsers() {
 		List<User> t = userRepository.findAll();
 		List<User> ret = new ArrayList<User>();
 		for (User u : t)
 			ret.add(userService.setCategory(u, reservationRepository.findAll()));
 		return ret;
+	}
+	
+	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
+	public List<User> setCategory() {
+		
+		return userService.getAllUsers();
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
