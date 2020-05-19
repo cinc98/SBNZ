@@ -13,7 +13,7 @@
                         <th class="text-left">ID</th>
                         <th class="text-left">Username</th>
                         <th class="text-left">Registration date</th>
-                        <th class="text-left">Medal</th>
+                        <th v-if="medalColumnHiden" class="text-left">Medal</th>
 
                     </tr>
                     </thead>
@@ -22,7 +22,7 @@
                         <td>{{u.id}}</td>
                         <td>{{u.username}}</td>
                         <td>{{new Date(u.registrationDate).toLocaleString().split(",")[0]}}</td>
-                        <td>{{u.medal}}</td>
+                        <td v-if="medalColumnHiden">{{u.medal}}</td>
                     </tr>
                     </tbody>
                 </template>
@@ -47,6 +47,7 @@ export default {
     data() {
         return {
             dialogToggleSearch : false,
+            medalColumnHiden: false,
         };
     },
     computed:{
@@ -71,6 +72,7 @@ export default {
             axios.get(`http://localhost:8080/user/category`)
                 .then((response) => {
                     this.addUsers(response.data);
+                    this.medalColumnHiden=true;
                 })
                 .catch((error) => {
                     console.log(error);

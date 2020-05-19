@@ -6,7 +6,7 @@
     >
       <v-card class="dialog">
         <v-card-title class="headline">Cancel reservation</v-card-title>
-        <h3>Rental price: {{price}} $</h3>
+        <h3>Rental price: {{price*((100-discount)/100)}} $</h3>
         <h5>You have to pay {{penalty}}% due to cancellation!</h5>
 
         <v-card-actions>
@@ -43,7 +43,7 @@ export default {
 
         };
     },
-    props: ['dialogToggle', 'show', 'price', 'penalty', 'idRes' ],
+    props: ['dialogToggle', 'show', 'price', 'discount', 'penalty', 'idRes' ],
     methods:{
         agree(){
               axios.post(`http://localhost:8080/reservation/cancel-agree?reservationId=${this.$props.idRes}&penalty=${this.$props.penalty}`)

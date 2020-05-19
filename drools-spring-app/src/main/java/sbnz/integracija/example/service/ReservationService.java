@@ -53,23 +53,23 @@ public class ReservationService {
 	}
 
 	public Reservation cancelReservation(List<Reservation> reservations, Reservation r) {
-		KieSession kieSession = SampleApp.kieSessions.get("kieSession-CancelReservations");
-		
-        if(kieSession == null) {
-        	kieSession = kieContainer.newKieSession();
-        	SampleApp.kieSessions.put("kieSession-CancelReservations",kieSession);
-        	for (Reservation res : reservations) {
-    			if (res.getId() != r.getId()) {
-    				kieSession.insert(res);
-    			}
-    		}
-        } 
+		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(r);
 		FactHandle handle = kieSession.getFactHandle(r);
+		
 		r.setStatus("OTKAZIVANJE");
 		kieSession.update(handle, r);
+		for (Reservation res : reservations) {
+			if (res.getId() != r.getId()) {
+				kieSession.insert(res);
+
+			}
+				
+		}
+
 		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
 		kieSession.fireAllRules();
+		kieSession.dispose();
 		return r;
 	}
 

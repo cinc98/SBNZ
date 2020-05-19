@@ -42,7 +42,7 @@
                 </v-simple-table>
             </div> 
             <search-dialog v-bind:dialogToggleS="this.toggleDialogSearchClick" v-bind:show="this.dialogToggleSearch"/>
-            <cancel-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:idRes="this.idRes" v-bind:penalty="this.penalty" v-bind:price="this.price"  v-bind:show="this.dialogToggle"/>
+            <cancel-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:discount="this.discount"  v-bind:idRes="this.idRes" v-bind:penalty="this.penalty" v-bind:price="this.price"  v-bind:show="this.dialogToggle"/>
             <extend-dialog v-bind:dialogToggle="this.toggleExtendDialog" v-bind:untilDate="this.untilDate" v-bind:idRes="this.idResE"  v-bind:show="this.dialogExtendToggle"/>
         </div>
     </div>
@@ -69,6 +69,7 @@ export default {
             idRes : '',
             idResE : '',
             untilDate: '',
+            discount:''
                 
         };
     },
@@ -92,6 +93,7 @@ export default {
                     this.toggleDialogClick();
                     this.penalty=response.data.penaltyPercentage;
                     this.price=response.data.price;
+                    this.discount=response.data.discount;
                 })
                 .catch((error) => {
                     console.log(error);
