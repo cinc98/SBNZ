@@ -1,0 +1,22 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.model.Recommendation;
+
+query jePreporucenOd(String x, String y )
+  Recommendation( x, y; )
+  or 	
+  ( Recommendation( z, y; ) and jePreporucenOd( x, z; ) )
+end
+
+global String first;
+
+rule "go"
+	agenda-group "preporuka"
+	lock-on-active true
+when
+    $u : User( $s : username);
+    jePreporucenOd(first, $s;);
+then
+    modify ($u) { setRecommended(true); }
+end

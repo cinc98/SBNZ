@@ -6,11 +6,45 @@ import org.apache.commons.lang.time.DateUtils
 import java.util.*
 
 agenda-group "kategorije"
+
+rule "BRONZE"
+	salience 50
+	lock-on-active true
+	when 
+		$user: User()
+	then
+		modify ($user) { setMedal("BRONZE"); }		
+		drools.halt();
+end
+
+rule "SILVER"
+	lock-on-active true
+	salience 20
+	when 
+		$user: User($korisnikId : id, 
+		medal == "BRONZE",
+		$fromDate : registrationDate,
+		$pomerenDatum: DateUtils.addMonths(new Date(), -6),
+		eval($pomerenDatum.after($fromDate)))
+		$rezervacija : Reservation()
+		$rezervacije : List() from collect ( Reservation(user == $korisnikId, status == "ZAVRSEN") )
+        $total : Number(intValue >= 500) from accumulate(
+			 $s: Reservation () from $rezervacije,
+	         init( int intValue = 0; ),
+	         action( intValue += $s.getPrice(); ),
+	         result( intValue )
+		)
+		eval($rezervacije.size()>1)
+	then
+		System.out.println("Ovaj korisnik ima :" + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je SILVER status" );
+		modify ($user) { setMedal("SILVER"); }		
+end
+
 rule "GOLD"
 	lock-on-active true
-	salience 50
+	salience 10
 	when 
-		$user: User($korisnikId : id)
+		$user: User($korisnikId : id,medal == "SILVER")
 		$rezervacija : Reservation()
 		$rezervacije : List() from collect ( Reservation(user == $korisnikId, status == "ZAVRSEN",
 		$fromDate : fromDate,
@@ -28,35 +62,4 @@ rule "GOLD"
 		modify ($user) { setMedal("GOLD"); }		
 		drools.halt();
 end
-rule "SILVER"
-	lock-on-active true
-	salience 20
-	when 
-		$user: User($korisnikId : id, 
-		$fromDate : registrationDate,
-		$pomerenDatum: DateUtils.addMonths(new Date(), -6),
-		eval($pomerenDatum.after($fromDate)))
-		$rezervacija : Reservation()
-		$rezervacije : List() from collect ( Reservation(user == $korisnikId, status == "ZAVRSEN") )
-        $total : Number(intValue >= 500) from accumulate(
-			 $s: Reservation () from $rezervacije,
-	         init( int intValue = 0; ),
-	         action( intValue += $s.getPrice(); ),
-	         result( intValue )
-		)
-		eval($rezervacije.size()>1)
-	then
-		System.out.println("Ovaj korisnik ima :" + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je SILVER status" );
-		modify ($user) { setMedal("SILVER"); }		
-		drools.halt();
-end
 
-rule "BRONZE"
-	lock-on-active true
-	salience -100
-	when 
-		$user: User()
-	then
-		modify ($user) { setMedal("BRONZE"); }		
-		drools.halt();
-end

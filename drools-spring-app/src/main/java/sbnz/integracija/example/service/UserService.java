@@ -11,14 +11,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import sbnz.integracija.example.model.Recommendation;
 import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.repository.RecommendationRepository;
 import sbnz.integracija.example.repository.UserRepository;
 
 @Service
 public class UserService {
 
 	private final KieContainer kieContainer;
+
+	@Autowired
+	private RecommendationRepository recommendationRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -39,6 +44,11 @@ public class UserService {
 		return u;
 	}
 
+	public ResponseEntity<String> newRecommendation(String first,String second){
+		Recommendation ret = new Recommendation(first,second);
+		recommendationRepository.save(ret);
+		return new ResponseEntity<String>("Korisnik " + first + " je preporucio " + second, HttpStatus.OK);
+	}
 	public ResponseEntity<String> registerUser(String username, String password) {
 
 		User retUser = userRepository.findOneByUsername(username);
@@ -77,6 +87,25 @@ public class UserService {
 			}
 		}
 		
+		return users;
+	}
+	
+	public List<User> check(String first) {
+		User firstUser = userRepository.findOneByUsername(first);
+		KieSession kieSession = kieContainer.newKieSession();
+		kieSession.setGlobal("first", firstUser.getUsername());
+		
+		List<Recommendation> r = recommendationRepository.findAll();
+		for (Recommendation res : r)
+			kieSession.insert(res);
+		List<User> users = userRepository.findAll();
+		for(User u : users) {
+			u.setRecommended(false);
+			kieSession.insert(u);
+		}
+		kieSession.getAgenda().getAgendaGroup("preporuka").setFocus();
+		kieSession.fireAllRules();
+		kieSession.dispose();
 		return users;
 	};
 
