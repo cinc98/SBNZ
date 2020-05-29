@@ -19,6 +19,16 @@ public class User implements Serializable {
 	private String password;
 
 	private Date registrationDate;
+	
+	private Boolean recommended;
+
+	public Boolean getRecommended() {
+		return recommended;
+	}
+
+	public void setRecommended(Boolean recommended) {
+		this.recommended = recommended;
+	}
 
 	@ManyToMany
 	@JoinTable(name = "searches", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "car_id"))

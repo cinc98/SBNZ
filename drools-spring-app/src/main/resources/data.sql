@@ -1,13 +1,16 @@
 INSERT INTO sbnz.user 
-VALUES (100,'bronza', '123', '2020-06-10', 'stefan');
+VALUES (100,'bronza', '123',false, '2020-06-10', 'stefan');
 INSERT INTO sbnz.user 
-VALUES (200,'bronza', '123', '2020-06-10', 'cinc');
+VALUES (200,'bronza', '123',false, '2020-06-10', 'cinc');
 INSERT INTO sbnz.user 
-VALUES (300,'bronza', '123', '2019-06-10', 'miki');
+VALUES (300,'bronza', '123',false, '2019-06-10', 'miki');
 INSERT INTO sbnz.user 
-VALUES (400,'bronza', '123', '2020-06-10', 'mile');
+VALUES (400,'bronza', '123',false, '2020-06-10', 'mile');
 INSERT INTO sbnz.user 
-VALUES (500,'bronza', 'admin', '2020-06-10', 'admin');
+VALUES (500,'bronza', 'admin',false, '2020-06-10', 'admin');
+
+INSERT INTO sbnz.recommendation VALUES (100,'stefan', 'miki');
+INSERT INTO sbnz.recommendation VALUES (101,'miki', 'cinc');
 
 INSERT INTO sbnz.car  
 VALUES (1,'prva','2019-06-10','https://autorepublika.com/wp-content/uploads/2019/10/20.jpg',27000,'Golf', 'VW',0,20,0);
