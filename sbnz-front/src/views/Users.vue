@@ -3,7 +3,7 @@
         <app-bar/>
         <div class="home">
             <div class="nav">
-                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogSearchClick"/>
+                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogSearchClick" v-bind:recommendationDialogToggle="this.toggleRecommendationDialogClick" v-bind:recommendationListDialogToggle="this.toggleRecommendationListDialogClick"/>
             </div>
             <div>
                 <v-simple-table>
@@ -30,7 +30,9 @@
                 <v-btn @click="awardMedal">Award medal</v-btn>
             </div> 
             <search-dialog v-bind:dialogToggleS="this.toggleDialogSearchClick" v-bind:show="this.dialogToggleSearch"/>
-            
+            <recommendation-dialog v-bind:dialogToggle="this.toggleRecommendationDialogClick" v-bind:show="this.recommendationDialogToggle"/>
+            <recommendation-list-dialog v-bind:dialogToggle="this.toggleRecommendationListDialogClick" v-bind:show="this.recommendationListDialogToggle"/>
+
         </div>
     </div>
 </template>
@@ -40,6 +42,8 @@ import axios from 'axios';
 import Navigation from '../components/Navigation.vue';
 import AppBar from '../components/AppBar.vue';
 import SearchDialog from '../components/SearchDialog.vue';
+import RecommendationDialog from '../components/RecommendationDialog.vue';
+import RecommendationListDialog from '../components/RecommendationListDialog.vue';
 
 
 export default {
@@ -48,6 +52,9 @@ export default {
         return {
             dialogToggleSearch : false,
             medalColumnHiden: false,
+            recommendationDialogToggle:false,
+            recommendationListDialogToggle:false,
+
         };
     },
     computed:{
@@ -59,11 +66,19 @@ export default {
     components:{
         Navigation,
         AppBar,
-        SearchDialog
+        SearchDialog,
+        RecommendationDialog,
+        RecommendationListDialog
     },
     methods:{
         toggleDialogSearchClick() {
             this.dialogToggleSearch = !this.dialogToggleSearch;
+        },
+        toggleRecommendationDialogClick() {
+            this.recommendationDialogToggle = !this.recommendationDialogToggle;
+        },
+        toggleRecommendationListDialogClick() {
+            this.recommendationListDialogToggle = !this.recommendationListDialogToggle;
         },
         addUsers(users) {
             this.$store.commit('fetchUsers', users);

@@ -1,0 +1,65 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.model.Car;
+import sbnz.integracija.example.model.Reservation;
+import org.apache.commons.lang.time.DateUtils
+import java.util.*
+
+rule "Ukoliko model nije imao rezervacije u prethodnih 15 dana i ako je cena veca od prosecne cene automobila iste marke aministrator dobija obavestenje da treba da smanji cenu"
+	agenda-group "notifikacije"
+	lock-on-active
+	salience 10
+    when
+        // rezervacije od poslednjih 15 dana
+        $rez15: List() from collect ( Reservation( 
+    	$datum: DateUtils.addDays(fromDate, 15),
+		eval($datum.after(new Date()))))
+    	$rezervacije : Set() from accumulate (
+			Reservation (
+				$id : car
+			) from $rez15,
+			collectSet($id)
+		)
+		// vozila koja nemaju rezervacije u prethodnih 15 dana
+		$car : Car( id not memberOf $rezervacije, $model: name ,$price1: price)
+		$sviAutomobili: List() from collect ( Car( name == $model ) )
+		
+		Number ($avg: doubleValue) from accumulate (
+    		Car(
+    			$price: price
+    		) from $sviAutomobili,
+    		average($price)
+    	)
+    	
+    	eval($price1 > $avg)
+    then
+    	modify ($car) { setChangePrice(-1); }	
+        System.out.println("Upozoriti admina da snizi cenu " + $model);
+
+end
+
+rule "Ako je odredeni model automobila iznajmljen vise od 5 puta u prethodnih mesec dana administrator dobija obavestenje da treba da podigne cenu automobila"
+	agenda-group "notifikacije"
+	lock-on-active
+    when
+        // rezervacije od poslednjih mesec dana
+        $rezervacije: List() from collect (Reservation( 
+    	$datum: DateUtils.addDays(fromDate, 30),
+		eval($datum.after(new Date()))))
+		$car : Car( $id: id )
+		
+		Number (intValue > 5) from accumulate (
+    		Reservation(
+    			$id == car
+    		) from $rezervacije,
+    		init( int intValue = 0; ),
+	        action( intValue += 1; ),
+	        result( intValue )
+    	)
+		
+    then
+    	modify ($car) { setChangePrice(1); }	
+        System.out.println("Upozoriti admina da povisi cenu");
+
+end

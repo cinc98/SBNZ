@@ -3,7 +3,7 @@
         <app-bar/>
         <div class="home">
             <div class="nav">
-                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogSearchClick"/>
+                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogSearchClick" v-bind:recommendationDialogToggle="this.toggleRecommendationDialogClick" v-bind:recommendationListDialogToggle="this.toggleRecommendationListDialogClick"/>
             </div>
 
             <div>
@@ -44,6 +44,8 @@
             <search-dialog v-bind:dialogToggleS="this.toggleDialogSearchClick" v-bind:show="this.dialogToggleSearch"/>
             <cancel-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:discount="this.discount"  v-bind:idRes="this.idRes" v-bind:penalty="this.penalty" v-bind:price="this.price"  v-bind:show="this.dialogToggle"/>
             <extend-dialog v-bind:dialogToggle="this.toggleExtendDialog" v-bind:untilDate="this.untilDate" v-bind:idRes="this.idResE"  v-bind:show="this.dialogExtendToggle"/>
+            <recommendation-dialog v-bind:dialogToggle="this.toggleRecommendationDialogClick" v-bind:show="this.recommendationDialogToggle"/>
+            <recommendation-list-dialog v-bind:dialogToggle="this.toggleRecommendationListDialogClick" v-bind:show="this.recommendationListDialogToggle"/>
         </div>
     </div>
 </template>
@@ -55,7 +57,8 @@ import AppBar from '../components/AppBar.vue';
 import CancelDialog from '../components/CancelDialog.vue';
 import ExtendDialog from '../components/ExtendDialog.vue';
 import SearchDialog from '../components/SearchDialog.vue';
-
+import RecommendationDialog from '../components/RecommendationDialog.vue';
+import RecommendationListDialog from '../components/RecommendationListDialog.vue';
 
 export default {
     name: "Home",
@@ -64,6 +67,8 @@ export default {
             dialogToggle : false,
             dialogExtendToggle : false,
             dialogToggleSearch : false,
+            recommendationDialogToggle:false,
+            recommendationListDialogToggle:false,
             penalty : '',
             price : '',
             idRes : '',
@@ -83,7 +88,9 @@ export default {
         AppBar,
         CancelDialog,
         ExtendDialog,
-        SearchDialog
+        SearchDialog,
+        RecommendationDialog,
+        RecommendationListDialog
     },
     methods:{
         cancelReservation(id){
@@ -105,6 +112,12 @@ export default {
             this.idResE=id;
             this.toggleExtendDialog();
 
+        },
+        toggleRecommendationDialogClick() {
+            this.recommendationDialogToggle = !this.recommendationDialogToggle;
+        },
+        toggleRecommendationListDialogClick() {
+            this.recommendationListDialogToggle = !this.recommendationListDialogToggle;
         },
         toggleDialogClick() {
             this.dialogToggle = !this.dialogToggle;
@@ -147,8 +160,4 @@ export default {
     flex-wrap: wrap;
 
 }
-.nav{
-   
-}
-
 </style>

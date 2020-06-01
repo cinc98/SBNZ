@@ -47,7 +47,7 @@ public class UserService {
 	public ResponseEntity<String> newRecommendation(String first,String second){
 		Recommendation ret = new Recommendation(first,second);
 		recommendationRepository.save(ret);
-		return new ResponseEntity<String>("Korisnik " + first + " je preporucio " + second, HttpStatus.OK);
+		return new ResponseEntity<String>("Korisnik " + first + " je preporucio korisnika: " + second, HttpStatus.OK);
 	}
 	public ResponseEntity<String> registerUser(String username, String password) {
 

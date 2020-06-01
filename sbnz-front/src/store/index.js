@@ -8,8 +8,15 @@ export default new Vuex.Store({
     activeReservations: [],
     model: '',
     users: [],
+    badgeShow:true,
   },
   mutations: {
+    hideBadge(state){
+      state.badgeShow=false;
+    },
+    showBadge(state){
+      state.badgeShow=true;
+    },
     addModel(state, model) {
       state.model = model;
     },

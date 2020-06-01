@@ -3,7 +3,7 @@
         <app-bar/>
         <div class="home">
             <div class="nav">
-                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogClick"/>
+                <navigation v-bind:dialogToggleSearchasd="this.toggleDialogClick" v-bind:recommendationDialogToggle="this.toggleRecommendationDialogClick" v-bind:recommendationListDialogToggle="this.toggleRecommendationListDialogClick"/>
             </div>
             <div class="cards">
                     <car-card v-for="car in cars" :key="car.id" v-bind:name="car.name" v-bind:carId="car.id" v-bind:img="car.image" v-bind:km="car.km" v-bind:date="car.date" v-bind:price="car.price" v-bind:model="car.model"/>
@@ -11,6 +11,12 @@
             </div> 
             <div>
                 <search-dialog v-bind:dialogToggleS="this.toggleDialogClick" v-bind:show="this.dialogToggle"/>
+            </div>
+            <div>
+                <recommendation-dialog v-bind:dialogToggle="this.toggleRecommendationDialogClick" v-bind:show="this.recommendationDialogToggle"/>
+            </div>
+            <div>
+                <recommendation-list-dialog v-bind:dialogToggle="this.toggleRecommendationListDialogClick" v-bind:show="this.recommendationListDialogToggle"/>
             </div>
 
         </div>
@@ -23,6 +29,8 @@ import Navigation from '../components/Navigation.vue';
 import CarCard from '../components/CarCard.vue'
 import AppBar from '../components/AppBar.vue';
 import SearchDialog from '../components/SearchDialog.vue'
+import RecommendationDialog from '../components/RecommendationDialog.vue';
+import RecommendationListDialog from '../components/RecommendationListDialog.vue';
 
 
 export default {
@@ -31,17 +39,28 @@ export default {
         return {
             cars: null,
             dialogToggle:false,
+            recommendationDialogToggle:false,
+            recommendationListDialogToggle:false,
+
         };
     },
     components:{
         Navigation,
         CarCard,
         AppBar,
-        SearchDialog
+        SearchDialog,
+        RecommendationDialog,
+        RecommendationListDialog
     },
     methods:{
         toggleDialogClick() {
             this.dialogToggle = !this.dialogToggle;
+        },
+        toggleRecommendationDialogClick() {
+            this.recommendationDialogToggle = !this.recommendationDialogToggle;
+        },
+        toggleRecommendationListDialogClick() {
+            this.recommendationListDialogToggle = !this.recommendationListDialogToggle;
         },
     },
     created(){
@@ -70,8 +89,6 @@ export default {
     flex-wrap: wrap;
 
 }
-.nav{
-   
-}
+
 
 </style>

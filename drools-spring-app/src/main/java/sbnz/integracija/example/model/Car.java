@@ -23,6 +23,7 @@ public class Car implements Serializable {
 	private int searched;
 	private String category;
 	private String image;
+	private int changePrice = 0;
 
 	@ManyToMany(mappedBy = "cars")
 	Set<User> users = new HashSet<User>();
@@ -127,6 +128,14 @@ public class Car implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public int getChangePrice() {
+		return changePrice;
+	}
+
+	public void setChangePrice(int changePrice) {
+		this.changePrice = changePrice;
 	}
 
 	@Override

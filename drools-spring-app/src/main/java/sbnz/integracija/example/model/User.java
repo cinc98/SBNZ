@@ -19,16 +19,10 @@ public class User implements Serializable {
 	private String password;
 
 	private Date registrationDate;
-	
+
+	private String medal;
+
 	private Boolean recommended;
-
-	public Boolean getRecommended() {
-		return recommended;
-	}
-
-	public void setRecommended(Boolean recommended) {
-		this.recommended = recommended;
-	}
 
 	@ManyToMany
 	@JoinTable(name = "searches", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "car_id"))
@@ -87,8 +81,6 @@ public class User implements Serializable {
 		this.medal = medal;
 	}
 
-	private String medal;
-
 	public String getPassword() {
 		return password;
 	}
@@ -103,6 +95,14 @@ public class User implements Serializable {
 
 	public void setCars(Set<Car> cars) {
 		this.cars = cars;
+	}
+
+	public Boolean getRecommended() {
+		return recommended;
+	}
+
+	public void setRecommended(Boolean recommended) {
+		this.recommended = recommended;
 	}
 
 	@Override

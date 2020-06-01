@@ -9,16 +9,13 @@ agenda-group "kategorije"
 
 rule "BRONZE"
 	salience 50
-	lock-on-active true
 	when 
 		$user: User()
 	then
 		modify ($user) { setMedal("BRONZE"); }		
-		drools.halt();
 end
 
 rule "SILVER"
-	lock-on-active true
 	salience 20
 	when 
 		$user: User($korisnikId : id, 
@@ -36,12 +33,11 @@ rule "SILVER"
 		)
 		eval($rezervacije.size()>1)
 	then
-		System.out.println("Ovaj korisnik ima :" + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je SILVER status" );
+		System.out.println("Ovaj korisnik ima " + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je SILVER status" );
 		modify ($user) { setMedal("SILVER"); }		
 end
 
 rule "GOLD"
-	lock-on-active true
 	salience 10
 	when 
 		$user: User($korisnikId : id,medal == "SILVER")
@@ -58,8 +54,6 @@ rule "GOLD"
 		)
 		eval($rezervacije.size()>4)
 	then
-		System.out.println("Ovaj korisnik ima :" + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je GOLD status" );
+		System.out.println("Ovaj korisnik ima " + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je GOLD status" );
 		modify ($user) { setMedal("GOLD"); }		
-		drools.halt();
 end
-
