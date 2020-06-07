@@ -21,7 +21,7 @@ rule "Ukoliko je prethodnih godina model imao uspesno realizovana rentiranja, ce
 		)
 		eval($godineSet.size() > 0)
     then
-      	System.out.println("Korisnik " + $korisnikId + " mora da plati " +Math.min($godineSet.size()*10, 100)+"% od cene iznajmljivanja zbog otkazivanja!");
+      	System.out.println("Korisnik " + $korisnikId + " mora da plati " +Math.min($godineSet.size()*10, 100)+"% od cene iznajmljivanja zbog otkazivanja na osnovu godina!");
 		modify ($rezervacija) { setPenaltyPercentage(Math.min($godineSet.size()*10, 100)); }		
 		drools.halt();
 end

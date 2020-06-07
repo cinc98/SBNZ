@@ -62,9 +62,7 @@ public class ReservationService {
 		for (Reservation res : reservations) {
 			if (res.getId() != r.getId()) {
 				kieSession.insert(res);
-
-			}
-				
+			}				
 		}
 
 		kieSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();

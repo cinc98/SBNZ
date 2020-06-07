@@ -9,9 +9,9 @@ import java.util.*
 rule "Popust od 40% za korisnika koji zeli da rentira automobil koji je rentirao u prethodnih mesec dana"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 40
+	salience 10
 	when 
-		$rezervacija : Reservation($korisnikId : user, discount == 0, status == "REZERVISAN", $automobilId : car)
+		$rezervacija : Reservation($korisnikId : user, status == "REZERVISAN", $automobilId : car)
         $rezervacije : List() from collect ( Reservation(
         car == $automobilId,
         user == $korisnikId,
@@ -23,16 +23,16 @@ rule "Popust od 40% za korisnika koji zeli da rentira automobil koji je rentirao
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 40%");
 		modify ($rezervacija) { setDiscount(40); }		
-		drools.halt();
+		
 		
 end
 
 rule "Popust od 30% ukoliko je u proteklih mesec dana rentirao automobil"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 30
+	salience 20
 	when 
-		$rezervacija : Reservation($korisnikId : user, discount == 0, status == "REZERVISAN")
+		$rezervacija : Reservation($korisnikId : user, status == "REZERVISAN")
         $rezervacije : List() from collect ( Reservation(
         user == $korisnikId,
         status == "ZAVRSEN",
@@ -43,14 +43,14 @@ rule "Popust od 30% ukoliko je u proteklih mesec dana rentirao automobil"
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 30%");
 		modify ($rezervacija) { setDiscount(30); }		
-		drools.halt();
+		
 		
 end
 
 rule "Popust od 20% ukoliko korisnik zakaze rentiranje mesec dana ranije"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 20
+	salience 30
 	when 
 		$rezervacija: Reservation($korisnikId : user, discount == 0, status == "REZERVISAN",
 		$pomerenDatum: DateUtils.addDays(new Date(), 30),
@@ -58,17 +58,17 @@ rule "Popust od 20% ukoliko korisnik zakaze rentiranje mesec dana ranije"
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 20%");
 		modify ($rezervacija) { setDiscount(20); }		
-		drools.halt();
+		
 end
 
 rule "Ako korisnik zeli da produzi rentiranje dobija dodatni popust od 10%"
 	agenda-group "popusti"
 	lock-on-active true
-	salience 10
+	salience 0
 	when 
 		$rezervacija : Reservation($korisnikId : user, status == "PRODUZAVANJE")
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 10%");
 		modify ($rezervacija) { setDiscount(10); }
-		drools.halt();
+		
 end
