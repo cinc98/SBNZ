@@ -25,15 +25,13 @@ rule "SILVER"
 		eval($pomerenDatum.after($fromDate)))
 		$rezervacija : Reservation()
 		$rezervacije : List() from collect ( Reservation(user == $korisnikId, status == "ZAVRSEN") )
-        $total : Number(intValue >= 500) from accumulate(
-			 $s: Reservation () from $rezervacije,
-	         init( int intValue = 0; ),
-	         action( intValue += $s.getPrice(); ),
-	         result( intValue )
+        Number(intValue >= 500) from accumulate(
+			 $s: Reservation ($p : price) from $rezervacije,
+	         sum($p)
 		)
 		eval($rezervacije.size()>1)
 	then
-		System.out.println("Ovaj korisnik ima " + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je SILVER status" );
+		System.out.println("Ovaj korisnik ima " + $rezervacije.size() + " i dodeljen mu je SILVER status" );
 		modify ($user) { setMedal("SILVER"); }		
 end
 
@@ -46,14 +44,12 @@ rule "GOLD"
 		$fromDate : fromDate,
 		$pomerenDatum: DateUtils.addMonths(new Date(), -12),
 		eval($pomerenDatum.before($fromDate))) )
-        $total : Number(intValue >= 500) from accumulate(
-			 $s: Reservation () from $rezervacije,
-	         init( int intValue = 0; ),
-	         action( intValue += $s.getPrice(); ),
-	         result( intValue )
+        Number(intValue >= 500) from accumulate(
+			 $s: Reservation ($p : price) from $rezervacije,
+	         sum($p)
 		)
 		eval($rezervacije.size()>4)
 	then
-		System.out.println("Ovaj korisnik ima " + $rezervacije.size() + " rezervacija ukupne cene: " +$total + " i dodeljen mu je GOLD status" );
+		System.out.println("Ovaj korisnik ima " + $rezervacije.size() + " i dodeljen mu je GOLD status" );
 		modify ($user) { setMedal("GOLD"); }		
 end

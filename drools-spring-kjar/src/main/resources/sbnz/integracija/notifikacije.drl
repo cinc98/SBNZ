@@ -53,9 +53,7 @@ rule "Ako je odredeni model automobila iznajmljen vise od 5 puta u prethodnih me
     		Reservation(
     			$id == car
     		) from $rezervacije,
-    		init( int intValue = 0; ),
-	        action( intValue += 1; ),
-	        result( intValue )
+    		sum(1)
     	)
 		
     then
