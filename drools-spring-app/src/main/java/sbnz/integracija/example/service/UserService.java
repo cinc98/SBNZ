@@ -33,6 +33,7 @@ public class UserService {
 		 this.kieContainer = kieContainer;
 
 	}
+	
 	public User setCategory(User u,List<Reservation> reservations) {
 		KieSession kieSession = kieContainer.newKieSession();
 		kieSession.insert(u);
