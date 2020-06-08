@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.drools.core.ClockType;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
+import org.kie.api.KieServices;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.KieSessionConfiguration;
+import org.kie.api.runtime.conf.ClockTypeOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +42,14 @@ public class UserService {
 	}
 	
 	public User setCategory(User u,List<Reservation> reservations) {
-		KieSession kieSession = kieContainer.newKieSession();
+		KieServices ks = KieServices.Factory.get();
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kieContainer.newKieBase(kconf);
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kieSession = kieBase.newKieSession(kconfig1, null);
+        
 		kieSession.insert(u);
 		for (Reservation res : reservations)
 			kieSession.insert(res);
@@ -93,7 +107,14 @@ public class UserService {
 	
 	public List<User> check(String first) {
 		User firstUser = userRepository.findOneByUsername(first);
-		KieSession kieSession = kieContainer.newKieSession();
+		KieServices ks = KieServices.Factory.get();
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kieContainer.newKieBase(kconf);
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kieSession = kieBase.newKieSession(kconfig1, null);
+        
 		kieSession.setGlobal("first", firstUser.getUsername());
 		
 		List<Recommendation> r = recommendationRepository.findAll();

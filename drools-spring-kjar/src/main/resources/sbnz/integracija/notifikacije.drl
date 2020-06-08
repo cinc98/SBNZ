@@ -35,7 +35,7 @@ rule "Ukoliko model nije imao rezervacije u prethodnih 15 dana i ako je cena vec
     	eval($price1 > $avg)
     then
     	modify ($car) { setChangePrice(-1); }	
-        System.out.println("Upozoriti admina da snizi cenu " + $model);
+        System.out.println("Upozoriti admina da snizi cenu ");
 
 end
 
@@ -61,3 +61,4 @@ rule "Ako je odredeni model automobila iznajmljen vise od 5 puta u prethodnih me
         System.out.println("Upozoriti admina da povisi cenu");
 
 end
+

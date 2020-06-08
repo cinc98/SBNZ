@@ -21,6 +21,7 @@ import sbnz.integracija.example.model.User;
 import sbnz.integracija.example.repository.CarRepository;
 import sbnz.integracija.example.repository.ReservationRepository;
 import sbnz.integracija.example.repository.UserRepository;
+import sbnz.integracija.example.service.CarService;
 import sbnz.integracija.example.service.ReservationService;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -29,7 +30,10 @@ import org.apache.commons.lang.time.DateUtils;
 @RestController
 @RequestMapping("reservation")
 public class ReservationController {
-
+	
+	@Autowired
+	private CarService carService;
+	
 	@Autowired
 	private ReservationService reservationService;
 
@@ -98,7 +102,9 @@ public class ReservationController {
 		newRes.setPrice(r.getPrice());
 		newRes.setDiscount(r.getDiscount());
 		reservationRepository.save(newRes);
-
+		
+		carService.getNot(r);
+		
 		return new ResponseEntity<String>("Uspesno ste rezervisali vozilo!", HttpStatus.CREATED);
 	}
 

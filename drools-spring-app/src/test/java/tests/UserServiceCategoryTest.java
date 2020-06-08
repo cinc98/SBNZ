@@ -4,10 +4,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
+import org.drools.core.ClockType;
 import org.junit.Test;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
 import org.kie.api.KieServices;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.KieSessionConfiguration;
+import org.kie.api.runtime.conf.ClockTypeOption;
 
 import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.model.User;
@@ -19,7 +25,14 @@ public class UserServiceCategoryTest {
 	public void bronzeMedal() {
 		KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession();
+        
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kContainer.newKieBase(kconf);
+
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kSession = kieBase.newKieSession(kconfig1, null);
 		
         User u = new User();
         u.setId(1);
@@ -38,7 +51,14 @@ public class UserServiceCategoryTest {
 	public void silverMedal() {
 		KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession();
+        
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kContainer.newKieBase(kconf);
+
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kSession = kieBase.newKieSession(kconfig1, null);
 		
         User u = new User();
         u.setId(100);
@@ -73,7 +93,14 @@ public class UserServiceCategoryTest {
 	public void goldMedal() {
 		KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession();
+        
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kContainer.newKieBase(kconf);
+
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kSession = kieBase.newKieSession(kconfig1, null);
 		
         User u = new User();
         u.setId(100);

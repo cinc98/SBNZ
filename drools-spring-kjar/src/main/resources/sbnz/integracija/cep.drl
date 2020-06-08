@@ -1,0 +1,27 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.User;
+import sbnz.integracija.example.model.Car;
+import sbnz.integracija.example.model.Reservation;
+import org.apache.commons.lang.time.DateUtils
+import java.util.*
+
+rule "5u10m"
+	agenda-group "cep"
+	lock-on-active
+    when
+        $car : Car( $id: id )
+		
+		Number (intValue > 1) from accumulate (
+    		Reservation(
+    			$id == car,
+    			$datum: DateUtils.addMinutes(fromDate, 10),
+				eval($datum.after(new Date()))
+    		) over window: time(2m),
+    		sum(1)
+    	)
+		
+    then
+    	modify ($car) { setChangePrice(2); }	
+        System.out.println("Upozoriti admina da duplo povisi cenu");
+end

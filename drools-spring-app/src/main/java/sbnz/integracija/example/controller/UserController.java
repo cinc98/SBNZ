@@ -80,7 +80,14 @@ public class UserController {
 
 	@RequestMapping(value = "/get-notifications", method = RequestMethod.GET, produces = "application/json")
 	public List<Car> getNotifications() {
-		return carService.getNotifications();
+		List<Car> l = carService.getNot(null);
+		List<Car> list= carService.getNotifications();
+		for(int i=0;i<l.size();i++) {
+			if(l.get(i).getChangePrice()==2) {
+					list.get(i).setChangePrice(2);
+			}
+		}
+		return list;
 	}
 
 }

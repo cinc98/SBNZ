@@ -5,8 +5,13 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.kie.api.definition.type.Role;
+import org.kie.api.definition.type.Timestamp;
+
 @SuppressWarnings("serial")
 @Entity
+
+@Role(Role.Type.EVENT)
 public class Reservation implements Serializable {
 
 	@Id

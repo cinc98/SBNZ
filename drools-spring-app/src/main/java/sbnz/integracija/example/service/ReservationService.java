@@ -3,8 +3,15 @@ package sbnz.integracija.example.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.drools.core.ClockType;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
+import org.kie.api.KieServices;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.KieSessionConfiguration;
+import org.kie.api.runtime.conf.ClockTypeOption;
 import org.kie.api.runtime.rule.FactHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +48,13 @@ public class ReservationService {
 	public Reservation discountReservation(List<Reservation> reservations, Reservation r) {
 		KieSession kieSession = SampleApp.kieSessions.get("kieSession-DiscountReservations");
         if(kieSession == null) {
-        	kieSession = kieContainer.newKieSession();
+        	KieServices ks = KieServices.Factory.get();
+            KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+            kconf.setOption(EventProcessingOption.STREAM);
+            KieBase kieBase = kieContainer.newKieBase(kconf);
+            KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+            kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+            kieSession = kieBase.newKieSession(kconfig1, null);
         	SampleApp.kieSessions.put("kieSession-reservations",kieSession);
         	for (Reservation res : reservations)
     			kieSession.insert(res);
@@ -53,7 +66,14 @@ public class ReservationService {
 	}
 
 	public Reservation cancelReservation(List<Reservation> reservations, Reservation r) {
-		KieSession kieSession = kieContainer.newKieSession();
+		KieServices ks = KieServices.Factory.get();
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kieContainer.newKieBase(kconf);
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kieSession = kieBase.newKieSession(kconfig1, null);
+        
 		kieSession.insert(r);
 		FactHandle handle = kieSession.getFactHandle(r);
 		

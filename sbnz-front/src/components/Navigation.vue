@@ -149,6 +149,8 @@ export default {
                         this.povecati.push(car);
                       else if(car.changePrice === -1)
                         this.smanjiti.push(car);
+                      else if(car.changePrice === 2)
+                        this.povecati.push(car);
                   });
               this.dialogToggle=true;
             })

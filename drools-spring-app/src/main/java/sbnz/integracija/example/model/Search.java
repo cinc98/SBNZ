@@ -26,6 +26,7 @@ public class Search {
 	public List<Characteristic> getUslovi() {
 		return uslovi;
 	}
+	
 	public void setUslovi(List<Characteristic> uslovi) {
 		this.uslovi = uslovi;
 	}

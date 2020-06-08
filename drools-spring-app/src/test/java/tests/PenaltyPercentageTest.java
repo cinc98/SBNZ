@@ -4,10 +4,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
+import org.drools.core.ClockType;
 import org.junit.Test;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
 import org.kie.api.KieServices;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.KieSessionConfiguration;
+import org.kie.api.runtime.conf.ClockTypeOption;
 
 import sbnz.integracija.example.model.Car;
 import sbnz.integracija.example.model.Reservation;
@@ -20,7 +26,14 @@ private KieSession kSession;
 	public void getNotification() {
 		KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession();
+        
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kContainer.newKieBase(kconf);
+
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kSession = kieBase.newKieSession(kconfig1, null);
         Date d = new Date();
         d.setDate(8);
         User u = new User();
@@ -48,12 +61,12 @@ private KieSession kSession;
         kSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
         kSession.fireAllRules();
         
-        kSession =  kContainer.newKieSession();
+        kSession = kieBase.newKieSession(kconfig1, null);
         kSession.insert(r2);
         kSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
         kSession.fireAllRules();
         
-        kSession =  kContainer.newKieSession();
+        kSession = kieBase.newKieSession(kconfig1, null);
         kSession.insert(r3);
         kSession.getAgenda().getAgendaGroup("otkazivanje").setFocus();
         kSession.fireAllRules();
@@ -68,7 +81,14 @@ private KieSession kSession;
 	public void getNotification2() {
 		KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession();
+        
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kContainer.newKieBase(kconf);
+
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kSession = kieBase.newKieSession(kconfig1, null);
         Date d = new Date();
         d.setDate(8);
         Date d1 = new Date();
@@ -114,7 +134,14 @@ private KieSession kSession;
 	public void getNotification3() {
 		KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession();
+        
+        KieBaseConfiguration kconf = ks.newKieBaseConfiguration();
+        kconf.setOption(EventProcessingOption.STREAM);
+        KieBase kieBase = kContainer.newKieBase(kconf);
+
+        KieSessionConfiguration kconfig1 = ks.newKieSessionConfiguration();
+        kconfig1.setOption(ClockTypeOption.get(ClockType.REALTIME_CLOCK.getId()));
+        KieSession kSession = kieBase.newKieSession(kconfig1, null);
         Date d = new Date();
         d.setYear(120);
         Date d1 = new Date();
