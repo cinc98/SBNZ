@@ -7,8 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.DefaultInvoker;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.Invoker;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.drools.template.DataProvider;
 import org.drools.template.DataProviderCompiler;
 import org.drools.template.objects.ArrayDataProvider;
@@ -139,7 +145,20 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity<>("Rule added",HttpStatus.OK);
+		InvocationRequest request = new DefaultInvocationRequest();
+		request.setPomFile(new File(
+				System.getProperty("user.dir").replace("drools-spring-app", "drools-spring-kjar") + "\\pom.xml"));
+		request.setGoals(Collections.singletonList("install"));
+
+		Invoker invoker = new DefaultInvoker();
+
+		try {
+			invoker.execute(request);
+		} catch (MavenInvocationException e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<>("Rule added", HttpStatus.OK);
 	}
 
 }
