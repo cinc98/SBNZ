@@ -16,6 +16,7 @@ import sbnz.integracija.example.model.User;
 public class PenaltyPercentageTest {
 private KieSession kSession;
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void getNotification() {
 		KieServices ks = KieServices.Factory.get();
@@ -64,6 +65,7 @@ private KieSession kSession;
         assertEquals(30,r2.getPenaltyPercentage());
         assertEquals(0,r3.getPenaltyPercentage());
 	}
+	@SuppressWarnings("deprecation")
 	@Test
 	public void getNotification2() {
 		KieServices ks = KieServices.Factory.get();
@@ -85,7 +87,8 @@ private KieSession kSession;
         d2.setDate(1);
         Date d3 = new Date();
         d3.setDate(3);
-        User u1 = new User();
+        @SuppressWarnings("unused")
+		User u1 = new User();
         u.setId(2);
        
         Reservation r2 = new Reservation(d2,d3,"REZERVISAN",500);
@@ -110,6 +113,7 @@ private KieSession kSession;
         assertEquals(55,r3.getPenaltyPercentage());
      
 	}
+	@SuppressWarnings("deprecation")
 	@Test
 	public void getNotification3() {
 		KieServices ks = KieServices.Factory.get();
@@ -134,7 +138,8 @@ private KieSession kSession;
         d2.setYear(118);
         Date d3 = new Date();
         d3.setYear(117);
-        User u1 = new User();
+        @SuppressWarnings("unused")
+		User u1 = new User();
         u.setId(2);
        
         Reservation r3 = new Reservation(d2,d2,"ZAVRSEN",500);

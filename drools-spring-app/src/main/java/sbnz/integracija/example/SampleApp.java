@@ -20,6 +20,7 @@ public class SampleApp {
 
 	private static Logger log = LoggerFactory.getLogger(SampleApp.class);
 	public static Map<String, KieSession> kieSessions = new HashMap<>();
+	public static String kjarPath;
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(SampleApp.class, args);
@@ -32,6 +33,7 @@ public class SampleApp {
 			sb.append(beanName + "\n");
 		}
 		log.info(sb.toString());
+		
 	}
 
 	@Bean

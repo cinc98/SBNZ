@@ -11,7 +11,6 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-import sbnz.integracija.example.SampleApp;
 import sbnz.integracija.example.model.Characteristic;
 import sbnz.integracija.example.model.Search;
 

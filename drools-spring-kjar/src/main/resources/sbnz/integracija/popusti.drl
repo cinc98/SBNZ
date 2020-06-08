@@ -8,7 +8,6 @@ import java.util.*
 
 rule "Popust od 40% za korisnika koji zeli da rentira automobil koji je rentirao u prethodnih mesec dana"
 	agenda-group "popusti"
-	lock-on-active true
 	salience 10
 	when 
 		$rezervacija : Reservation($korisnikId : user, status == "REZERVISAN", $automobilId : car)
@@ -22,14 +21,13 @@ rule "Popust od 40% za korisnika koji zeli da rentira automobil koji je rentirao
         eval ( $rezervacije.size() >= 1 )
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 40%");
-		modify ($rezervacija) { setDiscount(40); }		
+		modify ($rezervacija) { setDiscount(Math.min($rezervacija.getDiscount()+40, 100)); }		
 		
 		
 end
 
 rule "Popust od 30% ukoliko je u proteklih mesec dana rentirao automobil"
 	agenda-group "popusti"
-	lock-on-active true
 	salience 20
 	when 
 		$rezervacija : Reservation($korisnikId : user, status == "REZERVISAN")
@@ -42,14 +40,13 @@ rule "Popust od 30% ukoliko je u proteklih mesec dana rentirao automobil"
         eval ( $rezervacije.size() >= 1 )
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 30%");
-		modify ($rezervacija) { setDiscount(30); }		
+		modify ($rezervacija) { setDiscount(Math.min($rezervacija.getDiscount()+30, 100)); }		
 		
 		
 end
 
 rule "Popust od 20% ukoliko korisnik zakaze rentiranje mesec dana ranije"
 	agenda-group "popusti"
-	lock-on-active true
 	salience 30
 	when 
 		$rezervacija: Reservation($korisnikId : user, discount == 0, status == "REZERVISAN",
@@ -57,18 +54,17 @@ rule "Popust od 20% ukoliko korisnik zakaze rentiranje mesec dana ranije"
         eval($pomerenDatum.before(fromDate)))
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 20%");
-		modify ($rezervacija) { setDiscount(20); }		
+		modify ($rezervacija) { setDiscount(Math.min($rezervacija.getDiscount()+20, 100)); }		
 		
 end
 
 rule "Ako korisnik zeli da produzi rentiranje dobija dodatni popust od 10%"
 	agenda-group "popusti"
-	lock-on-active true
 	salience 0
 	when 
 		$rezervacija : Reservation($korisnikId : user, status == "PRODUZAVANJE")
 	then
 		System.out.println("Korisnik " + $korisnikId + " je ostvario popust od 10%");
-		modify ($rezervacija) { setDiscount(10); }
+		modify ($rezervacija) { setDiscount(Math.min($rezervacija.getDiscount()+10, 100)); }
 		
 end
