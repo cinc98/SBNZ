@@ -1,0 +1,22 @@
+template header
+minPrice
+maxPrice
+depostiValue
+
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.Reservation;
+
+
+template "classification-rules"
+
+rule "@{depostiValue}% deposit"
+no-loop true
+when
+    $r: Reservation(price >= @{minPrice}, price <= @{maxPrice}, status == "REZERVISAN")
+then
+    modify ($r){ setDeposit(@{depostiValue}+"%")};
+end
+
+end template
+

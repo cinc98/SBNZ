@@ -22,6 +22,7 @@ import sbnz.integracija.example.model.User;
 public class ReservationServiceDiscountTest {
 	private KieSession kSession;
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void getNotification() {
 		KieServices ks = KieServices.Factory.get();
@@ -84,7 +85,7 @@ public class ReservationServiceDiscountTest {
         kSession.fireAllRules();
         assertEquals(20,r1.getDiscount());
         assertEquals(30,r2.getDiscount());
-        assertEquals(40,r4.getDiscount());
+        assertEquals(70,r4.getDiscount());
         assertEquals(10,r6.getDiscount());
 	}
 }

@@ -6,7 +6,7 @@ import sbnz.integracija.example.model.Reservation;
 import org.apache.commons.lang.time.DateUtils
 import java.util.*
 
-rule "5u10m"
+rule "notifikacija ako su bule 2 rezervacije u poslednja 2 minuta"
 	agenda-group "cep"
 	lock-on-active
     when

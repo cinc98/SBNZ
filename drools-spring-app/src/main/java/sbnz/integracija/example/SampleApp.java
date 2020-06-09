@@ -32,6 +32,7 @@ public class SampleApp {
 			sb.append(beanName + "\n");
 		}
 		log.info(sb.toString());
+		
 	}
 
 	@Bean

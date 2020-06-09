@@ -17,7 +17,6 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.KieSessionConfiguration;
 import org.kie.api.runtime.conf.ClockTypeOption;
 
-import sbnz.integracija.example.SampleApp;
 import sbnz.integracija.example.model.Characteristic;
 import sbnz.integracija.example.model.Search;
 

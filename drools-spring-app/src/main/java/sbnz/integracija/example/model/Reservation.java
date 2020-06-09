@@ -6,11 +6,9 @@ import java.util.Date;
 import javax.persistence.*;
 
 import org.kie.api.definition.type.Role;
-import org.kie.api.definition.type.Timestamp;
 
 @SuppressWarnings("serial")
 @Entity
-
 @Role(Role.Type.EVENT)
 public class Reservation implements Serializable {
 
@@ -21,6 +19,7 @@ public class Reservation implements Serializable {
 	private String status;
 	private int discount;
 	private int penaltyPercentage;
+	private String deposit;
 	private double price;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -128,6 +127,14 @@ public class Reservation implements Serializable {
 
 	public void setPenaltyPercentage(int penaltyPercentage) {
 		this.penaltyPercentage = penaltyPercentage;
+	}
+
+	public String getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(String deposit) {
+		this.deposit = deposit;
 	}
 
 	@Override

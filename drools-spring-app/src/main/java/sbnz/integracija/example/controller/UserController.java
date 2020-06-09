@@ -1,9 +1,29 @@
 package sbnz.integracija.example.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.DefaultInvoker;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.Invoker;
+import org.apache.maven.shared.invoker.MavenInvocationException;
+import org.drools.template.DataProvider;
+import org.drools.template.DataProviderCompiler;
+import org.drools.template.objects.ArrayDataProvider;
+import org.kie.api.builder.Message;
+import org.kie.api.builder.Results;
+import org.kie.api.io.ResourceType;
+import org.kie.internal.utils.KieHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +45,10 @@ public class UserController {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
-	
+
 	@Autowired
 	private CarService carService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -88,6 +108,64 @@ public class UserController {
 			}
 		}
 		return list;
+	}
+
+	@RequestMapping(value = "/add-rule", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<?> addRule(@RequestParam("minPrice") String minPrice,
+			@RequestParam("maxPrice") String maxPrice, @RequestParam("depositValue") String depositValue) {
+
+		File initialFile = new File(System.getProperty("user.dir").replace("drools-spring-app", "drools-spring-kjar")
+				+ "\\src\\main\\resources\\sbnz\\integracija\\depozit.drt");
+
+		InputStream template = null;
+		try {
+			template = new FileInputStream(initialFile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Cant find template", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		DataProvider dataProvider = new ArrayDataProvider(
+				new String[][] { new String[] { minPrice, maxPrice, depositValue } });
+
+		DataProviderCompiler converter = new DataProviderCompiler();
+		String drl = converter.compile(dataProvider, template);
+
+		KieHelper kieHelper = new KieHelper();
+		kieHelper.addContent(drl, ResourceType.DRL);
+
+		Results results = kieHelper.verify();
+
+		if (results.hasMessages(Message.Level.WARNING, Message.Level.ERROR)) {
+			return new ResponseEntity<>("validation rule error", HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+
+		FileWriter myWriter;
+		try {
+			myWriter = new FileWriter(System.getProperty("user.dir").replace("drools-spring-app", "drools-spring-kjar")
+					+ "\\src\\main\\resources\\sbnz\\integracija\\" + depositValue + "_percentage_deposit_rule.drl");
+			myWriter.write(drl);
+			myWriter.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		InvocationRequest request = new DefaultInvocationRequest();
+		request.setPomFile(new File(
+				System.getProperty("user.dir").replace("drools-spring-app", "drools-spring-kjar") + "\\pom.xml"));
+		request.setGoals(Collections.singletonList("install"));
+
+		Invoker invoker = new DefaultInvoker();
+
+		try {
+			invoker.execute(request);
+		} catch (MavenInvocationException e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<>("Rule added", HttpStatus.OK);
 	}
 
 }
