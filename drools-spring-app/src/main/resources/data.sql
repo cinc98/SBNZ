@@ -17,7 +17,7 @@ VALUES (1,'prva',0,'2019-06-10','https://autorepublika.com/wp-content/uploads/20
 INSERT INTO sbnz.car  
 VALUES (2,'prva',0,'2020-01-20','https://autorepublika.com/wp-content/uploads/2019/01/1-299.jpg',19000,'3', 'BMW',0,35,0);
 INSERT INTO sbnz.car  
-VALUES (3,'prva',0,'2017-08-9','https://autodata24.com/i/opel/astra/astra-k/large/d208939963fee74fa5fd1608eff0aa0e.jpg',120000,'Astra', 'OPEL',0,15,0);
+VALUES (3,'prva',0,'2017-08-9','https://www.b92.net/news/pics/2017/11/18/10269290085a0ff900403a8689518380_orig.jpg',120000,'Astra', 'OPEL',0,15,0);
 INSERT INTO sbnz.car  
 VALUES (4,'prva',0,'2018-02-17','https://i.ytimg.com/vi/_fokJ36y8wM/maxresdefault.jpg',30000,'Insignia', 'OPEL',0,25,0);
 INSERT INTO sbnz.car  

@@ -11,15 +11,10 @@ rule "OPEL"
 
 	
 	when
-		$predlog: Search($uslovi: uslovi)
+		$predlog: Search($uslovi: uslovi, $opelUslovi: opelUslovi )
 		$dp: Priority($p: priority >= 3) from accumulate(
 			$s: Characteristic (
-				name == "Germany" ||
-				name == "Small Car" ||
-				name == "Petrol" ||
-				name == "Manual gearbox" ||
-				name == "ABS" ||
-				name == "Full leather"
+				name memberOf $opelUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(6);),
 			action($priority.addModel();),
@@ -34,13 +29,10 @@ rule "CITROEN"
 	salience($dp.priority)
 
 	when
-		$predlog: Search($uslovi: uslovi)
+		$predlog: Search($uslovi: uslovi, $citroenUslovi : citroenUslovi)
 		$dp: Priority($p: priority >= 3) from accumulate(
 			$s: Characteristic (
-				name == "France" ||
-				name == "Saloon" ||
-				name == "Automatic transmission" ||
-				name == "Navigation system"
+				name memberOf $citroenUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(4);),
 			action($priority.addModel();),
@@ -55,14 +47,10 @@ rule "FORD"
 	salience($dp.priority)
 
 	when
-		$predlog: Search($uslovi: uslovi)
+		$predlog: Search($uslovi: uslovi, $fordUslovi : fordUslovi)
 		$dp: Priority($p: priority >= 3) from accumulate(
 			$s: Characteristic (
-				name == "USA" ||
-				name == "SUV" ||
-				name == "LPG" ||
-				name == "ESP" ||
-				name == "Manual gearbox" 
+				name memberOf $fordUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(5);),
 			action($priority.addModel();),
@@ -77,14 +65,10 @@ rule "BMW"
 	salience($dp.priority + 10)
 
 	when
-		$predlog: Search($uslovi: uslovi)
+		$predlog: Search($uslovi: uslovi, $bmwUslovi : bmwUslovi)
 		$dp: Priority($p: priority == 5) from accumulate(
 			$s: Characteristic (
-				name == "Germany" ||
-				name == "SUV" ||
-				name == "Petrol" ||
-				name == "Automatic transmission" ||
-				name == "360 camera" 
+				name memberOf $bmwUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(10);),
 			action($priority.addModel();),
@@ -99,14 +83,10 @@ rule "MERCEDES"
 	salience($dp.priority + 10)
 
 	when
-		$predlog: Search($uslovi: uslovi)
+		$predlog: Search($uslovi: uslovi, $mercedesUslovi : mercedesUslovi)
 		$dp: Priority($p: priority == 5) from accumulate(
 			$s: Characteristic (
-				name == "Germany" ||
-				name == "Saloon" ||
-				name == "Petrol" ||
-				name == "Automatic transmission" ||
-				name == "Sport seats" 
+				name memberOf $mercedesUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(10);),
 			action($priority.addModel();),
@@ -121,14 +101,10 @@ rule "VOLVO"
 	salience($dp.priority + 10)
 
 	when
-		$predlog: Search($uslovi: uslovi)
+		$predlog: Search($uslovi: uslovi, $volvoUslovi : volvoUslovi)
 		$dp: Priority($p: priority == 5) from accumulate(
 			$s: Characteristic (
-				name == "Sweden" ||
-				name == "SUV" ||
-				name == "Petrol" ||
-				name == "Automatic transmission" ||
-				name == "LED headlights" 
+				name memberOf $volvoUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(10);),
 			action($priority.addModel();),
@@ -144,11 +120,10 @@ rule "FERARI"
 	salience($dp.priority + 50 + $dpSpec.priority)
 
 	when
-		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi)
+		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi, $ferariUslovi : ferariUslovi, $ferariSpecUslovi : ferariSpecUslovi)
 		$dp: Priority($p: priority >= 1) from accumulate(
 			$s: Characteristic (
-				name == "Italy" ||
-				name == "Coupe" 
+				name memberOf $ferariUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(2);),
 			action($priority.addModel();),
@@ -156,9 +131,7 @@ rule "FERARI"
 		)
 		$dpSpec: Priority($pSpec: priority >= 1) from accumulate(
 			$s: Characteristic (
-				name == "Night vision assist" ||
-				name == "Heated streering wheel" || 
-				name == "Bi-xenon headlights" 
+				name memberOf $ferariSpecUslovi
 			) from $spec,
 			init(Priority $priority = new Priority(3);),
 			action($priority.addModel();),
@@ -173,11 +146,10 @@ rule "BUGATI"
 	salience($dp.priority + 50 + $dpSpec.priority)
 
 	when
-		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi)
+		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi, $bugatiUslovi : bugatiUslovi, $bugatiSpecUslovi : bugatiSpecUslovi)
 		$dp: Priority($p: priority >= 1) from accumulate(
 			$s: Characteristic (
-				name == "France" ||
-				name == "Cabriolet" 
+				name memberOf $bugatiUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(2);),
 			action($priority.addModel();),
@@ -185,9 +157,7 @@ rule "BUGATI"
 		)
 		$dpSpec: Priority($pSpec: priority >= 1) from accumulate(
 			$s: Characteristic (
-				name == "Sports suspension" ||
-				name == "Hands-free" || 
-				name == "Digital cockpit" 
+				name memberOf $bugatiSpecUslovi
 			) from $spec,
 			init(Priority $priority = new Priority(3);),
 			action($priority.addModel();),
@@ -203,11 +173,10 @@ rule "BENTLI"
 	salience($dp.priority + 50 + $dpSpec.priority)
 
 	when
-		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi)
+		$predlog: Search($uslovi: uslovi,$spec : specificniUslovi, $bentliUslovi: bentliUslovi, $bentliSpecUslovi : bentliSpecUslovi)
 		$dp: Priority($p: priority >= 1) from accumulate(
 			$s: Characteristic (
-				name == "United Kingdom" ||
-				name == "Saloon" 
+				name memberOf $bentliUslovi
 			) from $uslovi,
 			init(Priority $priority = new Priority(2);),
 			action($priority.addModel();),
@@ -215,9 +184,7 @@ rule "BENTLI"
 		)
 		$dpSpec: Priority($pSpec: priority >= 1) from accumulate(
 			$s: Characteristic (
-				name == "Voice control" ||
-				name == "ISOFIX" || 
-				name == "Start-stop system" 
+				name memberOf $bentliSpecUslovi
 			) from $spec,
 			init(Priority $priority = new Priority(3);),
 			action($priority.addModel();),
