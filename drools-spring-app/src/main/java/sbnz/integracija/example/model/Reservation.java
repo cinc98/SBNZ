@@ -15,7 +15,8 @@ public class Reservation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
+	
+	
 	private String status;
 	private int discount;
 	private int penaltyPercentage;
@@ -95,6 +96,9 @@ public class Reservation implements Serializable {
 
 	public int getUser() {
 		return user.getId();
+	}
+	public String getUserName() {
+		return user.getUsername();
 	}
 
 	public String getUserame() {

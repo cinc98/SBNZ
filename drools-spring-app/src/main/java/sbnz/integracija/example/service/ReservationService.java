@@ -21,8 +21,10 @@ import org.springframework.stereotype.Service;
 import com.google.inject.Singleton;
 
 import sbnz.integracija.example.SampleApp;
+import sbnz.integracija.example.model.Recommendation;
 import sbnz.integracija.example.model.Reservation;
 import sbnz.integracija.example.repository.CarRepository;
+import sbnz.integracija.example.repository.RecommendationRepository;
 import sbnz.integracija.example.repository.ReservationRepository;
 
 @Service
@@ -34,7 +36,10 @@ public class ReservationService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
-
+	
+	@Autowired
+	private RecommendationRepository recommendationRepository;
+	
 	@Autowired
 	private CarRepository carRepository;
 
@@ -60,6 +65,20 @@ public class ReservationService {
     			kieSession.insert(res);
         } 
 		kieSession.insert(r);
+
+		kieSession.setGlobal("first", r.getUserame());
+		
+		
+		
+		List<Recommendation> recoms = recommendationRepository.findAll();
+		for (Recommendation res : recoms) {
+			System.out.println(res);
+			kieSession.insert(res);			
+		}
+
+		kieSession.getAgenda().getAgendaGroup("proba").setFocus();
+		kieSession.fireAllRules();
+		
 		kieSession.getAgenda().getAgendaGroup("popusti").setFocus();
 		kieSession.fireAllRules();
 		return r;
